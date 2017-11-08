@@ -5,16 +5,26 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+import { CardService } from './shared/services/cards.service';
+import { SafePipe } from './shared/pipes/safe-pipe';
+import { HomeFeedComponent } from './home-feed/home-feed.component';
+import { SearchComponent } from './search/search.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SafePipe,
+    HomeFeedComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    CardService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row text-center">
+    <div class="col-sm-6 offset-3">
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="search cards" (keypress)="enterKeyPressed($event)" [(ngModel)]="cardSearch" /> <br />
+        <div class="input-group-btn">
+          <button class="btn btn-success" (click)="searchCards()" id="searchBtn"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+      <br/>
+      <button class="btn btn-sm btn-primary">+ advanced search</button>
+    </div>
+  </div>
+  <br/><br/>
+
+</div>
+
+<div class="container" *ngIf="cards">
+
+  <div class="row">
+    <div class="col-sm-8 offset-2">
+      <button class="btn btn-sm btn-success" (click)="multiselectClick()">select multiple?</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8 offset-2">
+    <table class="table table-inverse" style="font-size: 12px">
+      <thead>
+      <!--<th colspan="1">portrait</th>-->
+      <th *ngIf="multiselect" colspan="1"></th>
+      <th colspan="1">name</th>
+      <th colspan="1">set</th>
+      <th colspan="1">type</th>
+      <th colspan="1">rarity</th>
+      </thead>
+      <tbody class="">
+      <tr *ngFor="let item of cards">
+        <!--<td>-->
+          <!--<img class="portrait-clip" [src]="item.imageUrl" height="50px" width="50px"/>-->
+        <!--</td>-->
+        <td *ngIf="multiselect">
+          <input type="checkbox" class="form-control">
+        </td>
+        <td class="hover_img">
+          <a href="#">{{item.name}}<span><img [src]="item.imageUrl" height="350" /></span></a>
+        </td>
+        <td>
+          {{item.setName}}
+        </td>
+        <td>
+          {{item.type}}
+        </td>
+        <td>
+          {{item.rarity}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+</div>
