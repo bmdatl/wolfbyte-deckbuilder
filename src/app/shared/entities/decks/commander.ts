@@ -5,7 +5,7 @@ import * as _ from '../../../../../node_modules/underscore/underscore-min.js';
 
 export class CommanderDeck extends Deck {
 
-  public cardMin = 2;
+  public cardMin = 100;
   public cardMax = 'none';
   public commander: Card;
 
@@ -18,8 +18,7 @@ export class CommanderDeck extends Deck {
   }
 
   ruleCheck() {
-    console.log(this.checkDuplicates());
-    if (!this.checkMinMax() || !this.checkCommander() || !this.checkLegality() || !this.checkDuplicates()) {
+    if (!this.checkMinMax() || !this.checkCommander() || !this.checkLegality() || this.checkDuplicates()) {
       console.log('rule check failed');
       return false;
     }
@@ -29,7 +28,6 @@ export class CommanderDeck extends Deck {
     if (this.numCards >= this.cardMin) {
       return true;
     } else {
-      console.log('below minimum cards');
       return false;
     }
   }
@@ -39,12 +37,10 @@ export class CommanderDeck extends Deck {
       if (this.commander.supertypes.includes('Legendary') || this.commander.text.includes('can be your commander')) {
         return true;
       } else {
-        console.log('illegal commander');
         return false;
       }
     }
      else {
-      console.log('no commander present');
       return false;
     }
   }
@@ -56,7 +52,6 @@ export class CommanderDeck extends Deck {
       banned.push(_.where(card.legalities, { format: "Commander", legality: "Banned" }));
     }
     if (banned.length) {
-      console.log('there are banned cards in this deck');
       return false;
     } else {
       return true;

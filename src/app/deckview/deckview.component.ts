@@ -27,12 +27,10 @@ export class DeckviewComponent implements OnInit {
 
   addCard() {
     this.testDeck.addCard(this.testCard);
-    console.log(this.testDeck);
   }
 
   ruleCheck() {
     this.testDeck.ruleCheck();
-
   }
 
 }
