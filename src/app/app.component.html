@@ -1,8 +1,31 @@
-<div class="text-center">
-    <h1 style="color: white">WOLFBYTE DECKBUILDER</h1>
-</div>
+ <nav class="site-nav">
+    <ul class="nav">
+      <li class="nav-item">
+        <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>-->
+        <a class="nav-link" href="/home">home</a>
+      </li>
+      <li class="nav-item">
+        <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['search']">search</a>-->
+        <a class="nav-link" href="/search">search</a>
+      </li>
+      <li class="nav-item">
+        <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['decks']">decks</a>-->
+        <a class="nav-link" href="/decks">decks</a>
+      </li>
+    </ul>
+  </nav>
 
-<app-search></app-search>
+<header class="site-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <img class="site-logo" src="../assets/img/wolfbyte-logo2.png" />
+      </div>
+    </div>
+  </div>
+</header>
 
-
+<!--<app-search></app-search>-->
+<!--<app-deckview></app-deckview>-->
+<router-outlet></router-outlet>
 

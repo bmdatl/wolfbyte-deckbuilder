@@ -38,6 +38,13 @@ export class CardService {
       .catch(this.error);
   }
 
+  getCardById(id): Observable<Card> {
+    let url = this.baseUrl + `/cards/${id}`;
+    return this.http.get(url)
+      .map(results => results.json().card)
+      .catch(this.error);
+  }
+
   getAllCards(): Observable<Card[]> {
     let url = this.baseUrl + `/cards`;
     return this.http.get(url)

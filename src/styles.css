@@ -1,7 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
+  #background-color: black;
+}
+
+.site-logo {
+  max-width: 160px;
+  height: auto;
+  position: absolute;
+}
+
+.site-header {
+  margin-bottom: 20px;
+}
+
+.site-nav {
   background-color: black;
+  color: white;
+}
+
+.btn-success {
+  background-color: blueviolet;
 }
 
 .btn-bmd {

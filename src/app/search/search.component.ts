@@ -20,12 +20,6 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // $('#imageLink').hover(function () {
-    //   console.log('hovering');
-    //   $('#image').fadeIn();
-    // }, function () {
-    //   $('#image').fadeOut();
-    // });
   }
 
   getCardSet(name) {
