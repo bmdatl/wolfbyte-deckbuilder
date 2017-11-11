@@ -56,3 +56,7 @@ body {
   clip-path: circle(30px at 50% 50%);
 }
 
+a {
+  color: blueviolet;
+}
+
