@@ -2,35 +2,29 @@ import { Card } from './card';
 
 export class Deck {
 
-  public id: number;
+  public _id?: string;
+  public userId?: string;
   public format: string;
-  public cards: Card[] = [];
-  public numCards: number;
-  public numLand: number;
-  public numCreature: number;
-  public numEnchantment: number;
-  public numSorcery: number;
-  public numInstant: number;
-  public numArtifact: number;
-  public numPlaneswalker: number;
-  public colors: string[];
-  public colorIdentity: string;
-  public priceEstimates: string[];
-  public upvotes: number;
+  public name: string;
+  public cards?: Card[] = [];
 
-  constructor() {
+  // generated information
+  public colors?: string[];
+  public colorIdentity?: string;
+  public priceEstimate?: string;
 
-  }
 
-  addCard(card: Card) {
-    this.cards.push(new Card(card));
-    this.numCards = this.cards.length;
-  }
+  // public numCards: number;
+  // public numLand: number;
+  // public numCreature: number;
+  // public numEnchantment: number;
+  // public numSorcery: number;
+  // public numInstant: number;
+  // public numArtifact: number;
+  // public numPlaneswalker: number;
+  // public colors: string[];
+  // public colorIdentity: string;
+  // public priceEstimates: string[];
+  // public upvotes: number;
 
-  removeCard(card: Card) {
-    let index = this.cards.indexOf(card);
-    if (index > -1) {
-      this.cards.splice(index, 1);
-    }
-  }
 }

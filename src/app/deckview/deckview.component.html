@@ -1,5 +1,55 @@
-<button (click)="addCard()">add</button>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 offset-4">
+      <h2>my decks</h2>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-sm-8 offset-4">
+      <button class="btn btn-success" (click)="createDeck()" *ngIf="!newDeck">create new</button>
+    </div>
+  </div>
+</div>
 
-<br/><br/><br/><br/>
+<div class="container-fluid" *ngIf="newDeck">
+      <div [formGroup]="deckForm" (ngSubmit)="submitDeck(deckForm.value)">
+        <div class="row">
+          <div class="col-sm-2 offset-4">
+        <label for="deck_name">name</label>
+        <input class="form-control" [formControl]="deckForm.controls['name']" id="deck_name">
 
-<button (click)="ruleCheck()">rule check</button>
+        <label for="format">format</label>
+        <select class="form-control" [formControl]="deckForm.controls['format']" id="format">
+          <option>Standard</option>
+          <option>Modern</option>
+          <option>Commander</option>
+          <option>Limited</option>
+          <option>Vintage</option>
+          <option>Legacy</option>
+        </select>
+
+        <label for="description">description</label>
+        <input class="form-control" [formControl]="deckForm.controls['description']" id="description">
+
+        <br/>
+        <button type="submit" class="btn btn-success">submit</button>
+          </div>
+          <div class="col-sm-2">
+            <div *ngIf="deckForm.controls['format'].value === 'Commander'">
+              <label for="commander_select">select commander</label>
+              <input auto-complete
+                     [source]="search.bind(this)"
+                     [(ngModel)]="selectedCommander"
+                     [min-chars]=3
+                     (keypress)="search($event)" [formControl]="deckForm.controls['commander']"
+                     class="form-control" id="commander_select" placeholder="search for a commander">
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
