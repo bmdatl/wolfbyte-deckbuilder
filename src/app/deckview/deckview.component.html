@@ -16,7 +16,7 @@
 </div>
 
 <div class="container-fluid" *ngIf="newDeck">
-      <div [formGroup]="deckForm" (ngSubmit)="submitDeck(deckForm.value)">
+  <form [formGroup]="deckForm" (ngSubmit)="submitDeck(deckForm.value)">
         <div class="row">
           <div class="col-sm-2 offset-4">
         <label for="deck_name">name</label>
@@ -45,11 +45,15 @@
                      [source]="search.bind(this)"
                      [(ngModel)]="selectedCommander"
                      [min-chars]=3
-                     (keypress)="search($event)" [formControl]="deckForm.controls['commander']"
+                     [list-formatter]="formatSearch"
+                     display-property-name="name"
+                     [formControl]="deckForm.controls['commander']"
                      class="form-control" id="commander_select" placeholder="search for a commander">
+              <br/>
+              <!--<button class="btn btn-sm btn-primary">Add another commander</button>-->
             </div>
           </div>
         </div>
-      </div>
+      </form>
 </div>
 

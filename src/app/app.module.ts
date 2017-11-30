@@ -14,6 +14,7 @@ import { SafePipe } from './shared/pipes/safe-pipe';
 import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { SearchComponent } from './search/search.component';
 import { DeckviewComponent } from './deckview/deckview.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DeckviewComponent } from './deckview/deckview.component';
     SafePipe,
     HomeFeedComponent,
     SearchComponent,
-    DeckviewComponent
+    DeckviewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

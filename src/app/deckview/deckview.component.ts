@@ -21,7 +21,8 @@ export class DeckviewComponent implements OnInit {
   newDeck: boolean = false;
   deckForm: FormGroup;
   selectedCommander: Card;
-  results: Card[];
+  results: any[];
+  validationErrs = [];
 
   constructor(
     private cs: CardService,
@@ -42,6 +43,17 @@ export class DeckviewComponent implements OnInit {
         this.testCard = card;
       });
   }
+
+  // ngOnChanges() {
+  //
+  //   if (this.selectedCommander.id) {
+  //     console.log(this.selectedCommander);
+  //     if (!this.validateCommander(this.selectedCommander)) {
+  //       this.validationErrs.push({ 'Commander error': 'This card cannot be your commander.'});
+  //       console.log(this.validationErrs);
+  //     }
+  //   }
+  // }
 
 
 
@@ -70,13 +82,28 @@ export class DeckviewComponent implements OnInit {
       });
   }
 
-  search = (keyword: any): Observable<Card[]> => {
+  search = (keyword: any) => {
     if (keyword) {
       return this.cs.searchCardsByName(keyword);
     }
   };
 
+  formatSearch = (data: any): string => {
+    if (data) {
+      return data.name;
+    }
+  };
+
+  validateCommander(card) {
+    if ((card.supertypes.contains('Legendary') && card.type.contains('Creature')) || card.text.contains('can be your commander')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   submitDeck(deck) {
+    console.log(this.selectedCommander);
     console.log(deck);
   }
 

@@ -29,11 +29,12 @@ export class CardService {
     return this.http.get(url)
       .map(res => res.json().cards)
       .map(data => {
-        let cards = [];
-        for (let card of data) {
-          cards.push(new Card(card));
-        }
-        return cards;
+        return data;
+        // let cards = [];
+        // for (let card of data) {
+        //   cards.push(new Card(card));
+        // }
+        // return cards;
       })
       .catch(this.error);
   }

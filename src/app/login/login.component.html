@@ -1,0 +1,18 @@
+<div class="login-page">
+  <div class="form">
+    <form [formGroup]="registerForm" class="register-form" *ngIf="isRegister" (ngSubmit)="createAccount(registerForm)">
+      <input [formControl]="registerForm.controls['username']" type="text" placeholder="username"/>
+      <input [formControl]="registerForm.controls['email']" type="text" placeholder="email address"/>
+      <input [formControl]="registerForm.controls['password']" type="password" placeholder="password"/>
+      <input [formControl]="registerForm.controls['passwordConfirmation']" type="password" placeholder="confirm password">
+      <button type="submit" class="btn btn-success">create</button>
+      <p class="message">Already registered? <a href="#" (click)="returningAccount()">Sign In</a></p>
+    </form>
+    <form [formGroup]="loginForm" class="login-form" *ngIf="isLogin" (ngSubmit)="login(loginForm)">
+      <input [formControl]="loginForm.controls['account']" type="text" placeholder="username or email"/>
+      <input [formControl]="loginForm.controls['password']" type="password" placeholder="password"/>
+      <button type="submit" class="btn btn-success">login</button>
+      <p class="message">Not registered? <a href="#" (click)="newAccount()">Create an account</a> </p>
+    </form>
+  </div>
+</div>
