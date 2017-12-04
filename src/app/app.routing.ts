@@ -21,8 +21,7 @@ export const appRoutes: Routes = [
   { path: 'feed', redirectTo: 'home' },
   { path: 'home', component: HomeFeedComponent },
   { path: 'decks', component: DeckviewComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LoginComponent, data: {logout:true}}
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+
+import { CardService } from '../shared/services/cards.service';
+
+import { User } from '../shared/entities/user';
+import { EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-home-feed',
@@ -7,9 +13,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeFeedComponent implements OnInit {
 
-  constructor() { }
+  @Output() search: EventEmitter<any> = new EventEmitter();
+
+  // currentUser: User;
+  sets;
+  viewSet;
+  setDtOptions: DataTables.Settings = {};
+  cardDtOptions: DataTables.Settings = {};
+
+  constructor(
+    private cardService: CardService
+  ) { }
 
   ngOnInit() {
+    //this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.setDtOptions = {
+      pageLength: 25,
+      order: [[2, 'desc']]
+    };
+    this.cardDtOptions = {
+      pageLength: 25
+    };
+
+    this.cardService.getAllSets()
+      .subscribe(sets => {
+        this.sets = sets;
+      });
+  }
+
+  getSetCards(code: string, name: string) {
+    this.cardService.getCardsBySet(code)
+      .subscribe(cards => {
+        this.viewSet = cards;
+        this.viewSet['currentSet'] = name;
+      });
+    // this.search.emit(code);
+    return false;
+  }
+
+  backToSets() {
+    this.viewSet = null;
   }
 
 }

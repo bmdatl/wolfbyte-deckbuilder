@@ -8,6 +8,14 @@ const User = require('../models/user'),
 
 module.exports = function(server) {
 
+  /*TODO: separate into controllers and services for separation of concerns.
+   * create a user service
+   * create a user controller
+   * create a deck service
+   * create a deck controller
+   * hash password in controller instead of in the model?
+   * need to minimize plaintext password handling as much as possible
+   */
 
 
   /*

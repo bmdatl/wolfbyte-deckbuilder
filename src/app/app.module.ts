@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app.routing';
+import { DataTablesModule } from 'angular-datatables';
 import { myHttpProvider } from './shared/helpers/my-http';
 
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
@@ -16,6 +17,7 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { AlertService } from './shared/services/alert.service';
 
 import { SafePipe } from './shared/pipes/safe-pipe';
+import { DataFilterPipe } from './shared/pipes/datafilter-pipe';
 import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { SearchComponent } from './search/search.component';
 import { DeckviewComponent } from './deckview/deckview.component';
@@ -27,6 +29,7 @@ import { LocalStorageService } from './shared/services/local-storage.service';
   declarations: [
     AppComponent,
     SafePipe,
+    DataFilterPipe,
     HomeFeedComponent,
     SearchComponent,
     DeckviewComponent,
@@ -39,7 +42,8 @@ import { LocalStorageService } from './shared/services/local-storage.service';
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    NguiAutoCompleteModule
+    NguiAutoCompleteModule,
+    DataTablesModule
   ],
   providers: [
     CardService,

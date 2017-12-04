@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CardService } from '../shared/services/cards.service';
 import { Card, Set, Legality, Ruling, ForeignName } from '../shared/entities/exports';
 
@@ -8,6 +8,8 @@ import { Card, Set, Legality, Ruling, ForeignName } from '../shared/entities/exp
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+
+  @Input() searchSet;
 
   cardSearch: string = null;
   cards: Card[];
@@ -20,6 +22,9 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.searchSet) {
+
+    }
   }
 
   getCardSet(name) {
@@ -33,6 +38,13 @@ export class SearchComponent implements OnInit {
      this.cs.searchCardsByName(this.cardSearch)
       .subscribe(cards => {
         console.log(cards);
+        this.cards = cards;
+      });
+  }
+
+  searchCardsBySet() {
+    this.cs.getCardsBySet(this.searchSet.code)
+      .subscribe(cards => {
         this.cards = cards;
       });
   }

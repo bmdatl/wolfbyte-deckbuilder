@@ -2,6 +2,8 @@ import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 
+import { tcgConfig } from '../../app.config';
+
 import { Card } from '../entities/card';
 
 //individual reactive functions
@@ -16,6 +18,7 @@ export class CardService {
   ) {}
 
   baseUrl = 'https://api.magicthegathering.io/v1';
+  tcgToken: string;
 
   searchSetsByName(name: string): Observable<Response[]> {
     let url = this.baseUrl + `/sets/?name=${name}`;
@@ -41,6 +44,23 @@ export class CardService {
       .catch(this.error);
   }
 
+  getCardsBySet(code: string): Observable<Card[]> {
+    let url = this.baseUrl + `/cards/?set=${code}`;
+    return this.http.get(url)
+      .map(results => results.json().cards)
+      // .flatMap(results => {
+      //   if (!this.tcgToken) {
+      //     this.getTCGToken();
+      //   } else {
+      //     for (let card of results) {
+      //       this.http.get(``)
+      //     }
+      //     //return this.http.get(`${tcgConfig.apiUrl}/`)
+      //   }
+      // })
+      .catch(this.error);
+  }
+
   getCardById(id): Observable<Card> {
     let url = this.baseUrl + `/cards/${id}`;
     return this.http.get(url)
@@ -53,6 +73,27 @@ export class CardService {
     return this.http.get(url)
       .map(results => results.json().cards)
       .catch(this.error);
+  }
+
+  getAllSets(): Observable<Response[]> {
+    let url = this.baseUrl + '/sets';
+
+    return this.http.get(url)
+      .map(results => results.json().sets)
+      .catch(this.error);
+  }
+
+  getTCGToken() {
+    let url = 'https://api.tcgplayer.com/token';
+    let data = {
+      grant_type: "client_credentials",
+      client_id: tcgConfig.pubkey,
+      client_secret: tcgConfig.privkey
+    };
+    this.http.post(url, data)
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
   private error(err: any) {

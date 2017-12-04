@@ -1,7 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-  #background-color: black;
+  background-image: url("./assets/img/spiration dark.png");
+  color: white;
+}
+
+body h2 {
+  color: white;
 }
 
 .site-logo {
@@ -21,6 +26,12 @@ body {
 
 .btn-success {
   background-color: blueviolet;
+  border-color: black;
+}
+
+.btn-success:hover {
+  background-color: black;
+  border-color: black;
 }
 
 .btn-bmd {
@@ -48,7 +59,7 @@ body {
 .btn-success-bmd {
   color: #fff;
   background-color: #5cb85c;
-  border-color: aquamarine;
+  border-color: black;
   pointer: cursor;
 }
 
@@ -57,8 +68,68 @@ body {
 }
 
 a {
-  color: blueviolet;
+  color: dodgerblue;
 }
+
+table {
+  font-size: 12px;
+}
+
+table td {
+  background-image: url("./assets/img/spiration dark.png");
+}
+
+.dataTables_wrapper td {
+  background-image: url("./assets/img/spiration dark.png");
+}
+
+.dataTables_wrapper label {
+  color: white;
+}
+
+.dataTables_wrapper .dataTables_info {
+  color: white;
+}
+
+.dataTables_wrapper select {
+  background-color: transparent;
+  color: white;
+}
+
+.dataTables_wrapper .dataTables_filter {
+  font-family: inherit;
+  float: right;
+  text-align: right;
+}
+.dataTables_wrapper .dataTables_filter input {
+  background-color: transparent;
+  color: white;
+  margin-left: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+select {
+
+}
+
+label {
+  font-weight: normal;
+}
+
+.hover_img a {
+  position: relative;
+}
+
+.hover_img a span {
+  position: absolute;
+  display: none;
+  z-index: 99;
+}
+
+.hover_img a:hover span {
+  display: block;
+}
+
 
 
 

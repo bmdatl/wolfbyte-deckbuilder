@@ -1,0 +1,64 @@
+<div class="container">
+
+  <!--search feature-->
+  <div class="row text-center">
+    <div class="col-sm-12">
+      <app-search></app-search>
+    </div>
+  </div>
+
+  <br/><br/>
+
+  <!--view sets-->
+  <div class="row">
+
+    <div class="col-sm-6" *ngIf="sets">
+      <h2 class="text-center">mtg sets</h2>
+      <table datatable class="table table-striped table-hover table-condensed"
+      [dtOptions]="setDtOptions">
+        <thead>
+        <tr>
+          <th colspan="1">set</th>
+          <th colspan="1">code</th>
+          <th colspan="1">release</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let set of sets">
+            <td>
+              <a href="#" (click)="getSetCards(set.code, set.name)">{{set.name}}</a>
+            </td>
+            <td>{{set.code}}</td>
+            <td>{{set.releaseDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-sm-6" *ngIf="viewSet">
+      <h2 class="text-center">{{viewSet.currentSet.toLowerCase()}} cards</h2>
+      <table datatable class="table table-striped table-hover table-condensed"
+             [dtOptions]="cardDtOptions">
+        <thead>
+        <tr>
+          <th colspan="1">name</th>
+          <th colspan="1">type</th>
+          <th colspan="1">rarity</th>
+          <th colspan="1">price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let card of viewSet">
+          <td class="hover_img">
+            <a href="#">{{card.name}}<span><img [src]="card.imageUrl" height="350" /></span></a>
+          </td>
+          <td>{{card.type}}</td>
+          <td>{{card.rarity}}</td>
+          <td>price here</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

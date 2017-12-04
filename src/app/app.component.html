@@ -12,20 +12,22 @@
         <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['decks']">decks</a>-->
         <a class="nav-link" href="/decks">decks</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!user;else loggedIn">
         <a class="nav-link" href="/login">login</a>
       </li>
-      <li *ngIf="user" class="nav-item">
-        <a class="nav-link" href="/logout">logout</a>
-      </li>
+      <ng-template #loggedIn>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="logout()">{{user.username}}: logout</a>
+        </li>
+      </ng-template>
     </ul>
   </nav>
 
 <header class="site-header">
   <div class="container">
     <div class="row">
-      <div class="col-sm-3">
-        <img class="site-logo" src="../assets/img/wolfbyte-logo2.png" />
+      <div class="col">
+        <img class="site-logo" src="../assets/img/wolfbyte-logo-4.png" />
       </div>
     </div>
   </div>
