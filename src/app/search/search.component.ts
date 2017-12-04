@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchCards() {
-    this.cs.searchCardsByName(this.cardSearch)
+     this.cs.searchCardsByName(this.cardSearch)
       .subscribe(cards => {
         console.log(cards);
         this.cards = cards;

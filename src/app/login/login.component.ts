@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+
+import { User } from '../shared/entities/user';
+
+import { AlertService } from '../shared/services/alert.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +20,18 @@ export class LoginComponent implements OnInit {
   registerForm: FormGroup;
   loginForm: FormGroup;
 
+  doLogout: false;
+
+  returnUrl: string;
+  loading = false;
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userService: UserService,
+    private alertService: AlertService,
+    private authService: AuthenticationService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.registerForm = this.fb.group({
       username: '',
@@ -31,6 +48,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.isLogin = true;
     this.isRegister = false;
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+    if (this.route.data['value'].logout) {
+      this.logout();
+    }
   }
 
   // show registration form and hide login form
@@ -69,12 +91,39 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     let formValues = form.value;
-    console.log(formValues);
+    let username = formValues.account,
+        password = formValues.password;
+
+    this.loading = true;
+    this.authService.login(username, password)
+      .subscribe(user => {
+        this.router.navigate(['/search']);
+      },
+        err => {
+          this.alertService.error(err);
+          this.loading = false;
+        });
+
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   createAccount(form) {
+    this.loading = true;
     let formValues = form.value;
-    console.log(formValues);
+    delete formValues['passwordConfirmation'];
+
+    this.userService.create(formValues)
+      .subscribe(user => {
+        this.alertService.success('Registration successful', true);
+        this.router.navigate(['/search']);
+      },
+      err => {
+        this.alertService.error(err);
+        this.loading = false;
+      });
   }
 
 

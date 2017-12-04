@@ -26,9 +26,11 @@ export class CardService {
 
   searchCardsByName(name: string): Observable<Card[]> {
     let url = this.baseUrl + `/cards/?name=${name}`;
+    console.log(url);
     return this.http.get(url)
       .map(res => res.json().cards)
       .map(data => {
+        console.log(data);
         return data;
         // let cards = [];
         // for (let card of data) {
@@ -54,7 +56,7 @@ export class CardService {
   }
 
   private error(err: any) {
-    return Observable.throw(err || err.message);
+    return err;
   }
 
 }
