@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { AuthenticationService } from './shared/services/authentication.service';
+import { tcgConfig } from './app.config';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   user;
+  tcgToken: string = null;
 
   ngOnInit() {
     // user a custom localstorage service to subscribe to an observable for change detection
@@ -26,6 +28,9 @@ export class AppComponent implements OnInit {
         this.user = null;
       }
     });
+
+
+
   }
 
   logout() {

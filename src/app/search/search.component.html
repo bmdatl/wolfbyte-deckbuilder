@@ -2,7 +2,17 @@
   <div class="row text-center">
     <div class="col-sm-6 offset-3">
       <div class="input-group">
-        <input class="form-control" type="text" placeholder="search cards" (keypress)="enterKeyPressed($event)" [(ngModel)]="cardSearch" /> <br />
+        <input auto-complete
+               class="form-control"
+               type="text"
+               placeholder="search cards"
+               (keypress)="enterKeyPressed($event)"
+               [source]="search.bind(this)"
+               [list-formatter]="formatSearch"
+               [min-chars]="3"
+               display-property-name="name"
+               [(ngModel)]="cardSearch" />
+        <br />
         <div class="input-group-btn">
           <button class="btn btn-success" (click)="searchCards()" id="searchBtn"><i class="fa fa-search"></i></button>
         </div>

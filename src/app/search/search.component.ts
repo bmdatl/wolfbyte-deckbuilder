@@ -68,4 +68,16 @@ export class SearchComponent implements OnInit {
     this.multiselect = !this.multiselect;
   }
 
+  search = (keyword: any) => {
+    if (keyword) {
+      return this.cs.searchCardsByName(keyword);
+    }
+  };
+
+  formatSearch = (data: any): string => {
+    if (data) {
+      return data.name;
+    }
+  };
+
 }

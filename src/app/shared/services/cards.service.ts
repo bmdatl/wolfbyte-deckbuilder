@@ -1,4 +1,4 @@
-import { Headers, Http, Response, URLSearchParams } from '@angular/http';
+import { Headers, Http, RequestOptions, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 
@@ -9,6 +9,7 @@ import { Card } from '../entities/card';
 //individual reactive functions
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class CardService {
@@ -33,7 +34,6 @@ export class CardService {
     return this.http.get(url)
       .map(res => res.json().cards)
       .map(data => {
-        console.log(data);
         return data;
         // let cards = [];
         // for (let card of data) {
@@ -81,19 +81,6 @@ export class CardService {
     return this.http.get(url)
       .map(results => results.json().sets)
       .catch(this.error);
-  }
-
-  getTCGToken() {
-    let url = 'https://api.tcgplayer.com/token';
-    let data = {
-      grant_type: "client_credentials",
-      client_id: tcgConfig.pubkey,
-      client_secret: tcgConfig.privkey
-    };
-    this.http.post(url, data)
-      .subscribe(res => {
-        console.log(res);
-      });
   }
 
   private error(err: any) {

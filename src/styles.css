@@ -2,11 +2,15 @@
 
 body {
   background-image: url("./assets/img/spiration dark.png");
-  color: white;
+
 }
 
 body h2 {
   color: white;
+}
+
+option {
+  color: black;
 }
 
 .site-logo {
@@ -73,6 +77,7 @@ a {
 
 table {
   font-size: 12px;
+  color: white;
 }
 
 table td {

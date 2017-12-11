@@ -24,6 +24,7 @@
     "@angular/router": "^5.0.5",
     "@ngui/auto-complete": "^0.16.0",
     "@types/mongodb": "^2.2.16",
+    "ajax": "0.0.4",
     "angular-datatables": "^5.0.0",
     "angular2-fontawesome": "^0.9.3",
     "bcrypt": "^1.0.3",
@@ -49,6 +50,8 @@
     "restify": "^6.3.4",
     "restify-cors-middleware": "^1.0.1",
     "restify-errors": "^5.0.0",
+    "restify-router": "^0.5.0",
+    "rootpath": "^0.1.2",
     "rxjs": "^5.5.3",
     "underscore": "^1.8.3",
     "zone.js": "^0.8.18"

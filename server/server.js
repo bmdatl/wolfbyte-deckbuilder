@@ -1,31 +1,19 @@
-'use strict';
-
-const config = require('../db/db'),
-      restify = require('restify'),
-      plugins = require('restify').plugins,
+require('rootpath');
+const express = require('express'),
+      config = require('../db/db'),
+      bodyParser = require('body-parser'),
       mongodb = require('mongodb').MongoClient,
       mongoose = require('mongoose'),
-      corsMiddleWare = require('restify-cors-middleware'),
+      cors = require('cors'),
       jwt = require('express-jwt');
 
-const cors = corsMiddleWare({
-  origins: ['http://localhost:4200', 'http://localhost:3000'],
-  allowHeaders: ['Authorization']
-});
+let app = express();
 
-let server = restify.createServer({
-  name: config.name,
-  version: config.version
-});
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-server.pre(cors.preflight);
-server.use(cors.actual);
-server.use(plugins.jsonBodyParser({ mapParams: true }));
-server.use(plugins.acceptParser(server.acceptable));
-server.use(plugins.queryParser({ mapParams: true }));
-server.use(plugins.fullResponse());
-
-server.use(jwt({
+app.use(jwt({
   secret: config.secret,
   getToken: function (req) {
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -36,12 +24,17 @@ server.use(jwt({
     return null;
   }
 }).unless(function(req) {
-  return (req.url === '/users' && req.method === 'POST' || req.url === '/users/authenticate');
+  return (
+    req.url === '/users' && req.method === 'POST' ||
+    req.url === '/users/authenticate' ||
+    req.url === '/cards/getToken'
+  );
 }));
 
-server.listen(config.port, () => {
+app.use('/users', require('./controllers/users.controller'));
+app.use('/cards', require('./controllers/cards.controller'));
 
-  // connect to mongoDB atlas
+app.listen(config.port, function() {
   mongoose.Promise = global.Promise;
   mongoose.connect(config.uri, { useMongoClient: true });
 
@@ -53,8 +46,6 @@ server.listen(config.port, () => {
   });
 
   db.once('open', () => {
-    require('./routes/routes')(server);
     console.log(`Server is listening on port ${config.port}`);
   });
-
 });

@@ -17,8 +17,8 @@ export const appRoutes: Routes = [
   //     { path: 'decks', component: DeckviewComponent}
   //   ]
   // }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'search', component: SearchComponent },
-  { path: 'feed', redirectTo: 'home' },
   { path: 'home', component: HomeFeedComponent },
   { path: 'decks', component: DeckviewComponent},
   { path: 'login', component: LoginComponent }

@@ -24,6 +24,7 @@ import { DeckviewComponent } from './deckview/deckview.component';
 import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './shared/directives/alert/alert.component';
 import { LocalStorageService } from './shared/services/local-storage.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { LocalStorageService } from './shared/services/local-storage.service';
     SearchComponent,
     DeckviewComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

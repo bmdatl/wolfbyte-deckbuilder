@@ -15,7 +15,7 @@ export class MyHttp extends Http {
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
     //todo: separate project into modules that require custom http versus default
-    if (url.includes('api.magicthegathering.io')) {
+    if (url.includes('api.magicthegathering.io') || url.includes('api.tcgplayer')) {
       return super.get(url);
     } else {
       return super.get(appConfig.apiUrl + url, this.addJwt(options)).catch(this.handleError);
