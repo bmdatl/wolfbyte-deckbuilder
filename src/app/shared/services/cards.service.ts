@@ -9,6 +9,7 @@ import { Card } from '../entities/card';
 //individual reactive functions
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
@@ -45,20 +46,51 @@ export class CardService {
   }
 
   getCardsBySet(code: string): Observable<Card[]> {
-    let url = this.baseUrl + `/cards/?set=${code}`;
+
+    // surely there's a better fuckin way to do this...
+    // how dost thou properly paginate?
+
+    let url = this.baseUrl + `/cards/?set=${code}&page=1`;
+    let url2 = this.baseUrl + `/cards/?set=${code}&page=2`;
+    let url3 = this.baseUrl + `/cards/?set=${code}&page=3`;
+    let url4 = this.baseUrl + `/cards/?set=${code}&page=4`;
+
+    let data = [];
     return this.http.get(url)
-      .map(results => results.json().cards)
-      // .flatMap(results => {
-      //   if (!this.tcgToken) {
-      //     this.getTCGToken();
-      //   } else {
-      //     for (let card of results) {
-      //       this.http.get(``)
-      //     }
-      //     //return this.http.get(`${tcgConfig.apiUrl}/`)
-      //   }
-      // })
-      .catch(this.error);
+      .map(response => {
+        data.push(response.json().cards);
+      })
+      .mergeMap(() => {
+        return this.http.get(url2)
+          .map(response => {
+            data.push(response.json().cards)
+          })
+          .mergeMap(() => {
+            return this.http.get(url3)
+              .map(response => {
+                data.push(response.json().cards);
+              })
+              .mergeMap(()=> {
+                return this.http.get(url4)
+                  .map(response => {
+                    data.push(response.json().cards);
+                    return data;
+                  })
+            })
+          });
+      }).map(data => {
+        let toReturn = [];
+        for (let i in data) {
+          for (let card of data[i]) {
+            toReturn.push(card);
+          }
+        }
+        return toReturn;
+      });
+
+    // return this.http.get(url2)
+    //   .map(response => response.json().cards)
+    //   .catch(this.error);
   }
 
   getCardById(id): Observable<Card> {

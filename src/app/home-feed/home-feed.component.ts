@@ -42,6 +42,7 @@ export class HomeFeedComponent implements OnInit {
       });
   }
 
+  // TODO: when other sets are clicked, datatables fucks up. fix that shit
   getSetCards(code: string, name: string) {
     this.cardService.getCardsBySet(code)
       .subscribe(cards => {

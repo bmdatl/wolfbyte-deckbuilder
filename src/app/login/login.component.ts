@@ -91,11 +91,11 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     let formValues = form.value;
-    let username = formValues.account,
+    let email = formValues.account,
         password = formValues.password;
 
     this.loading = true;
-    this.authService.login(username, password)
+    this.authService.login(email, password)
       .subscribe(user => {
         this.router.navigate(['/search']);
       },
