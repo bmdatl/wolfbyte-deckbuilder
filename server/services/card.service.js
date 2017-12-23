@@ -1,11 +1,14 @@
 const config = require('../../db/tcg'),
       https = require('https'),
+      Q = require('q'),
       Token = require('../models/token');
 
 let service = {};
 
 service.getToken = getToken;
 service.saveToken = saveToken;
+service.checkDbToken = checkDbToken;
+service.getTCGCard = getTCGCard;
 
 module.exports = service;
 
@@ -54,3 +57,54 @@ function saveToken(token) {
   });
   return null;
 }
+
+function checkDbToken() {
+  let deferred = Q.defer();
+
+  Token.findOne({ '.expires': { $gt: new Date() }}, function(err, token) {
+    if (err) {
+      deferred.reject(err.name);
+    }
+
+    if (token) {
+      deferred.resolve(token);
+    } else {
+      getToken()
+        .then(res => {
+          let token = JSON.parse(res);
+          saveToken(token);
+          deferred.resolve(token);
+        });
+    }
+  });
+  return deferred.promise;
+}
+
+function getTCGCard(cardName) {
+
+  return new Promise(function(resolve, reject) {
+    checkDbToken()
+      .then(res => {
+        let token = 'bearer ' + res.access_token;
+        let options = {
+          hostname: 'api.tcgplayer.com',
+          path: `/catalog/products?categoryId=1&getExtendedFields=true&productName=${cardName}`,
+          headers: {
+            Authorization: token
+          }
+        };
+        let card = "";
+        const req = https.get(options, function(res) {
+          res.on('data', (chunk) => {
+            card += chunk;
+          });
+          res.on('end', () => resolve(card));
+        });
+        req.on('error', (err) => {
+          console.error(`problem with request: ${err}`);
+        });
+        req.end();
+      });
+  });
+}
+

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app.routing';
 import { DataTablesModule } from 'angular-datatables';
+import { ModalModule } from 'ngx-bootstrap';
 import { myHttpProvider } from './shared/helpers/my-http';
 
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
@@ -25,18 +26,21 @@ import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './shared/directives/alert/alert.component';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { ProfileComponent } from './profile/profile.component';
+import { AdvCardFiltersComponent } from './shared/components/adv-card-filters/adv-card-filters.component';
+import { CardFilterPipe } from './shared/pipes/card-filter-pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SafePipe,
-    DataFilterPipe,
+    CardFilterPipe,
     HomeFeedComponent,
     SearchComponent,
     DeckviewComponent,
     LoginComponent,
     AlertComponent,
-    ProfileComponent
+    ProfileComponent,
+    AdvCardFiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { ProfileComponent } from './profile/profile.component';
     HttpModule,
     AppRoutingModule,
     NguiAutoCompleteModule,
-    DataTablesModule
+    DataTablesModule,
+    ModalModule.forRoot()
   ],
   providers: [
     CardService,

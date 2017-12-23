@@ -27,7 +27,9 @@ app.use(jwt({
   return (
     req.url === '/users' && req.method === 'POST' ||
     req.url === '/users/authenticate' ||
-    req.url === '/cards/getToken'
+    req.url === '/cards/getToken' ||
+    req.url === '/cards/checkToken' ||
+    req.url.includes('/cards/getTCGCard')
   );
 }));
 

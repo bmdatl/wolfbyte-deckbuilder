@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="form-group">
+
+    <label for="options">options:</label>
+    <div *ngFor="let option of filterOptions">
+      <label>
+        <input type="checkbox"
+               class="form-control"
+               name="options"
+               value="{{option.value}}"
+               [(ngModel)]="option.checked">
+        {{option.name}}
+      </label>
+    </div>
+
+    <!--<div class="row">-->
+      <!--<div class="col">-->
+        <!--&lt;!&ndash; FILTER BY CARD TYPE &ndash;&gt;-->
+        <!--<label for="sort-creature">creature</label>-->
+        <!--<input type="checkbox" value="Creature" id="sort-creature">-->
+        <!--<label for="sort-enchantment">enchantment</label>-->
+        <!--<input type="checkbox" value="Enchantment" id="sort-enchantment">-->
+        <!--<label for="sort-sorcery">sorcery</label>-->
+        <!--<input type="checkbox" value="Sorcery" id="sort-sorcery">-->
+        <!--<label for="sort-instant">instant</label>-->
+        <!--<input type="checkbox" value="Instant" id="sort-instant">-->
+        <!--<label for="sort-artifact">artifact</label>-->
+        <!--<input type="checkbox" value="Artifact" id="sort-artifact">-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row">-->
+      <!--<div class="col">-->
+        <!--&lt;!&ndash; FILTER BY RARITY &ndash;&gt;-->
+        <!--<label for="sort-common">common</label>-->
+        <!--<input type="checkbox" value="Common" id="sort-common">-->
+        <!--<label for="sort-uncommon">uncommon</label>-->
+        <!--<input type="checkbox" value="Uncommon" id="sort-uncommon">-->
+        <!--<label for="sort-rare">rare</label>-->
+        <!--<input type="checkbox" value="Rare" id="sort-rare">-->
+        <!--<label for="sort-mythic">mythic</label>-->
+        <!--<input type="checkbox" value="Mythic" id="sort-mythic">-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row">-->
+      <!--<div class="col">-->
+        <!--&lt;!&ndash; FILTER BY SUPERTYPE &ndash;&gt;-->
+        <!--<label for="sort-legendary">legendary</label>-->
+        <!--<input type="checkbox" value="Legendary" id="sort-legendary">-->
+      <!--</div>-->
+    <!--</div>-->
+
+  </div>
+</div>

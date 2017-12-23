@@ -11,8 +11,8 @@
 
   <!--view sets-->
   <div class="row">
-
     <div class="col-sm-6" *ngIf="sets">
+      <button class="btn btn-success" (click)="rerender()">rerender</button>
       <h2 class="text-center">mtg sets</h2>
       <table datatable class="table table-striped table-hover table-condensed"
       [dtOptions]="setDtOptions">
@@ -36,7 +36,22 @@
     </div>
 
     <div class="col-sm-6" *ngIf="viewSet">
-      <h2 class="text-center">{{viewSet.currentSet.toLowerCase()}} cards</h2>
+      <div class="text-center">
+        <h2>{{viewSet?.currentSet?.toLowerCase()}} cards</h2>
+        <button *ngIf="!showFilters" class="btn btn-success" (click)="viewFilters()">add filters</button>
+        <button *ngIf="showFilters" class="btn btn-success" (click)="viewFilters()">hide filters</button>
+      </div>
+      <div class="form-group" *ngIf="showFilters">
+          <span *ngFor="let option of filterOptions" style="font-size: 12px">
+            {{option.name}}
+              <input type="checkbox"
+                     name="options"
+                     [value]="option.value"
+                     [(ngModel)]="option.checked"
+                     (ngModelChange)="optionsChanged(option)">&nbsp;&nbsp;
+          </span>
+      </div>
+
       <table datatable class="table table-striped table-hover table-condensed"
              [dtOptions]="cardDtOptions">
         <thead>
@@ -44,21 +59,54 @@
           <th colspan="1">name</th>
           <th colspan="1">type</th>
           <th colspan="1">rarity</th>
-          <th colspan="1">price</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let card of viewSet">
-          <td class="hover_img">
-            <a href="#">{{card.name}}<span><img [src]="card.imageUrl" height="350" /></span></a>
-          </td>
-          <td>{{card.type}}</td>
-          <td>{{card.rarity}}</td>
-          <td>price here</td>
-        </tr>
+        <ng-container *ngFor="let card of viewSet | cardFilter: (filters.length ? filters : '')">
+        <!--<ng-container *ngFor="let card of viewSet">-->
+          <tr *ngIf="card.rarity !== 'Basic Land'">
+              <td class="hover_img" (click)="showCardModal(template, card)">
+                <a href="#">{{card.name}}<span><img [src]="card.imageUrl" height="350" /></span></a>
+              </td>
+              <td>{{card.type}}</td>
+              <td>
+              <span class="invisible-text">
+                <span *ngIf="card.rarity === 'Mythic Rare'">z</span>
+                <span *ngIf="card.rarity === 'Rare'">y</span>
+                <span *ngIf="card.rarity === 'Uncommon'">x</span>
+                <span *ngIf="card.rarity === 'Common'">w</span>
+            </span>{{card.rarity}}</td>
+          </tr>
+        </ng-container>
         </tbody>
       </table>
     </div>
 
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">{{viewCard.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <img [src]="viewCard.imageUrl">
+      </div>
+      <div class="col-sm-6">
+        <label class="text-center">add to existing deck</label>
+        <select class="form-control" id="deck-select">
+          <option *ngFor="let deck of myDecks">
+            {{deck.name}}
+          </option>
+        </select>
+        <button class="btn btn-primary">add to new deck</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

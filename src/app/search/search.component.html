@@ -1,7 +1,6 @@
 <div class="container">
   <div class="row text-center">
     <div class="col-sm-6 offset-3">
-      <div class="input-group">
         <input auto-complete
                class="form-control"
                type="text"
@@ -11,12 +10,10 @@
                [list-formatter]="formatSearch"
                [min-chars]="3"
                display-property-name="name"
-               [(ngModel)]="cardSearch" />
-        <br />
-        <div class="input-group-btn">
-          <button class="btn btn-success" (click)="searchCards()" id="searchBtn"><i class="fa fa-search"></i></button>
-        </div>
-      </div>
+               [(ngModel)]="cardSearch"
+               (ngModelChange)="goToCard(template)"
+        />
+          <button hidden class="btn btn-success" (click)="searchCards()" id="searchBtn"><i class="fa fa-search"></i></button>
       <br/>
       <button class="btn btn-sm btn-success">+ advanced search</button>
     </div>
@@ -46,9 +43,6 @@
       </thead>
       <tbody class="">
       <tr *ngFor="let item of cards">
-        <!--<td>-->
-          <!--<img class="portrait-clip" [src]="item.imageUrl" height="50px" width="50px"/>-->
-        <!--</td>-->
         <td *ngIf="multiselect">
           <input type="checkbox" class="form-control">
         </td>
@@ -69,3 +63,36 @@
     </table>
     </div>
 </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">{{cardSearch.name}}</h4>
+    <!--<small class="text-secondary">{{cardSearch.setName}}</small>-->
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <img *ngIf="cardSearch.imageUrl" [src]="cardSearch.imageUrl">
+        <span *ngIf="!cardSearch.imageUrl">Image unavailable.</span>
+      </div>
+      <div class="col-sm-6">
+        <label class="text-center">add to existing deck</label>
+        <select class="form-control" id="deck-select">
+          <option *ngFor="let deck of myDecks">
+            {{deck.name}}
+          </option>
+        </select>
+        <button class="btn btn-primary">add to new deck</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+
+      </div>
+    </div>
+  </div>
+</ng-template>

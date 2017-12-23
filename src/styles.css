@@ -2,14 +2,15 @@
 
 body {
   background-image: url("./assets/img/spiration dark.png");
-
+  color: white;
+  font-size: 13px;
 }
 
 body h2 {
   color: white;
 }
 
-option {
+option, ul {
   color: black;
 }
 
@@ -27,6 +28,7 @@ option {
   background-color: black;
   color: white;
 }
+
 
 .btn-success {
   background-color: blueviolet;
@@ -134,6 +136,25 @@ label {
 .hover_img a:hover span {
   display: block;
 }
+
+.invisible-text {
+  visibility: hidden;
+}
+
+.modal-header {
+  background-color: black;
+  border: 1px solid purple;
+}
+
+.modal-body {
+  background-color: black;
+  border: 1px solid purple;
+}
+
+.close {
+  color: white;
+}
+
 
 
 
