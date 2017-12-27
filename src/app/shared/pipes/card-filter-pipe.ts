@@ -4,7 +4,6 @@ import { Card } from '../entities/card';
 @Pipe({name: 'cardFilter'})
 export class CardFilterPipe implements PipeTransform {
   transform(cards: any[], query: string[]): any[] {
-
     if (!query || query.length === 0) {
       return cards;
     } else {

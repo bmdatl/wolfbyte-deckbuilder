@@ -28,6 +28,7 @@ import { LocalStorageService } from './shared/services/local-storage.service';
 import { ProfileComponent } from './profile/profile.component';
 import { AdvCardFiltersComponent } from './shared/components/adv-card-filters/adv-card-filters.component';
 import { CardFilterPipe } from './shared/pipes/card-filter-pipe';
+import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { CardFilterPipe } from './shared/pipes/card-filter-pipe';
     LoginComponent,
     AlertComponent,
     ProfileComponent,
-    AdvCardFiltersComponent
+    AdvCardFiltersComponent,
+    DeckbuilderComponent
   ],
   imports: [
     BrowserModule,

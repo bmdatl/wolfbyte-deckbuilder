@@ -1,0 +1,102 @@
+<!--search feature-->
+<div class="row text-center">
+  <div class="col-sm-12">
+    <app-search></app-search>
+  </div>
+</div>
+
+<br/><br/><br/><br/>
+
+
+<div class="text-center">
+  <h1 style="cursor: pointer" (click)="viewDecks()">{{deck?.name}} <span><i class="fa fa-angle-double-down"></i></span> | {{deck?.format}}</h1>
+  <div *ngIf="showDecks" class="row">
+    <div class="col-sm-2 offset-5">
+      <select *ngIf="showDecks" [(ngModel)]="deck" (ngModelChange)="editDeck(deck)" class="form-control form-control-sm">
+        <option *ngFor="let d of decks" [ngValue]="d">
+          {{d.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<br/><br/>
+
+<!--<h5>my decks</h5>-->
+<!--<div *ngFor="let d of decks" (click)="editDeck(d)">-->
+  <!--<span *ngIf="d.name === deck?.name">•</span> {{d.name}} <br/><br/>-->
+<!--</div>-->
+
+
+<div class="row">
+  <div class="col-sm-4 offset-4">
+    <div class="input-group">
+      <input type="text" class="form-control form-control-sm" placeholder="search cards...">
+      <div class="input-group-btn">
+        <button class="btn btn-primary" (click)="addCard()">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-sm-8 offset-2">
+    <div class="card">
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-2">
+            <h6><u>creatures</u></h6>
+            <ul *ngIf="deck">
+              <li *ngFor="let creature of deck.creatures">
+                {{creature.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-2">
+            <h6><u>artifacts</u></h6>
+            <ul *ngIf="deck">
+              <li *ngFor="let creature of deck.artifacts">
+                {{creature.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-2">
+            <h6><u>enchantments</u></h6>
+            <ul *ngIf="deck">
+              <li *ngFor="let creature of deck.enchantments">
+                {{creature.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-2">
+            <h6><u>instants</u></h6>
+            <ul *ngIf="deck">
+              <li *ngFor="let creature of deck.instants">
+                {{creature.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-2">
+            <h6><u>sorceries</u></h6>
+            <ul *ngIf="deck">
+              <li *ngFor="let creature of deck.sorceries">
+                {{creature.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-2">
+            <h6><u>planeswalkers</u></h6>
+            <ul *ngIf="deck">
+              <li *ngFor="let creature of deck.planeswalkers">
+                {{creature.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

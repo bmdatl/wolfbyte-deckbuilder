@@ -5,22 +5,36 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class DeckService {
-  private url = 'http://localhost:3000/api/decks';
+
+  deckEdit: Deck;
 
   constructor(private http: Http) {}
 
-  getAllDecks(): Promise<void | Deck[]> {
-    return this.http.get(this.url)
-      .toPromise()
-      .then(response => response.json() as Deck[])
-      .catch(this.handleError);
+  getAll() {
+    return this.http.get('/decks')
+      .map((response: Response) => response.json());
   }
 
-  createDeck(deck: Deck): Promise<void | Deck> {
-    return this.http.post(this.url, deck)
-      .toPromise()
-      .then(response => response.json() as Deck)
-      .catch(this.handleError);
+  getByUser(user_id: string) {
+    return this.http.get(`/decks/getUserDecks/${user_id}`)
+      .map((response: Response) => response.json());
+  }
+
+  getById(_id: string) {
+    return this.http.get(`/decks/${_id}`)
+      .map((response: Response) => response.json());
+  }
+
+  create(deck: Deck) {
+    return this.http.post('/decks', deck);
+  }
+
+  update(_id: string, data: any) {
+    return this.http.put(`/decks/${_id}`, data);
+  }
+
+  delete(_id: string) {
+    return this.http.delete(`/decks/${_id}`);
   }
 
   private handleError (error: any) {

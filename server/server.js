@@ -35,6 +35,7 @@ app.use(jwt({
 
 app.use('/users', require('./controllers/users.controller'));
 app.use('/cards', require('./controllers/cards.controller'));
+app.use('/decks', require('./controllers/decks.controller'));
 
 app.listen(config.port, function() {
   mongoose.Promise = global.Promise;

@@ -88,7 +88,7 @@ function getTCGCard(cardName) {
         let token = 'bearer ' + res.access_token;
         let options = {
           hostname: 'api.tcgplayer.com',
-          path: `/catalog/products?categoryId=1&getExtendedFields=true&productName=${cardName}`,
+          path: encodeURI(`/catalog/products?categoryId=1&getExtendedFields=true&productName=${cardName}`),
           headers: {
             Authorization: token
           }
@@ -106,5 +106,9 @@ function getTCGCard(cardName) {
         req.end();
       });
   });
+}
+
+function encodeUri(uri) {
+  return uri.replace('%20', '+');
 }
 

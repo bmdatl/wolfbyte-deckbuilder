@@ -1,6 +1,10 @@
-import { AfterViewInit, Component, OnChanges, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit, Component, OnChanges, OnInit, Output, TemplateRef, ViewChild,
+  ViewChildren, QueryList
+} from '@angular/core';
+
 import { DataTableDirective } from 'angular-datatables';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap';
@@ -10,8 +14,9 @@ import { CardService } from '../shared/services/cards.service';
 import { User } from '../shared/entities/user';
 import { EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Data } from '@angular/router';
+import { Data, NavigationExtras, Router } from '@angular/router';
 import { Deck } from '../shared/entities/deck';
+import { DeckService } from '../shared/services/deck.service';
 
 
 @Component({
@@ -29,29 +34,38 @@ import { Deck } from '../shared/entities/deck';
   `]
 })
 export class HomeFeedComponent implements OnInit {
+  trigger = new Subject();
+  @ViewChildren(DataTableDirective)
+    tables: QueryList<DataTableDirective>;
+
+  setDtOptions = {};
+  cardDtOptions = {};
 
   sets;
   viewSet;
   viewCard;
-  setDtOptions: DataTables.Settings = {};
-  cardDtOptions: DataTables.Settings = {};
 
   showFilters: boolean = false;
   filterOptions;
   filters: Array<string> = [];
 
   myDecks: Deck[];
+  deckForm: FormGroup;
 
   modalRef: BsModalRef;
+  currentUser;
 
   constructor(
     private cardService: CardService,
+    private deckService: DeckService,
     private modalService: BsModalService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.setDtOptions = {
       pageLength: 25,
       order: [[2, 'desc']]
@@ -59,6 +73,12 @@ export class HomeFeedComponent implements OnInit {
     this.cardDtOptions = {
       pageLength: 25
     };
+
+    this.deckForm = this.fb.group({
+      name: ['', Validators.required],
+      description: '',
+      format: ['', Validators.required]
+    });
 
     this.cardService.getAllSets()
       .subscribe(sets => {
@@ -125,7 +145,6 @@ export class HomeFeedComponent implements OnInit {
     } else {
       this.filters = this.filters.filter(i => i != option.value);
     }
-    console.log(this.filters);
   }
 
   // TODO: when other sets are clicked, datatables fucks up. fix that shit
@@ -138,8 +157,27 @@ export class HomeFeedComponent implements OnInit {
             retrievedCards.push(card);
           }
         }
-        this.viewSet = retrievedCards;
-        this.viewSet['currentSet'] = name;
+
+        if (!this.viewSet) {
+          this.viewSet = retrievedCards;
+          this.viewSet['currentSet'] = name;
+          setTimeout(() => {
+            this.trigger.next();
+          });
+        } else {
+          this.tables.forEach(table => {
+            if (table.dtTrigger) {
+              table.dtInstance.then((dt: DataTables.Api) => {
+                dt.destroy();
+                this.viewSet = retrievedCards;
+                this.viewSet['currentSet'] = name;
+                setTimeout(() => {
+                  this.trigger.next();
+                });
+              });
+            }
+          });
+        }
       });
     return false;
   }
@@ -150,12 +188,32 @@ export class HomeFeedComponent implements OnInit {
     return false;
   }
 
+  showDeckModal(template: TemplateRef<any>, card?) {
+    if (this.currentUser) {
+      console.log(this.currentUser);
+      this.modalRef = this.modalService.show(template);
+    } else {
+      alert("you must be logged in to create decks!");
+    }
+  }
+
   viewFilters() {
     this.showFilters = !this.showFilters;
   }
 
   getUserDecks() {
 
+  }
+
+  submitNewDeck(formValues) {
+    formValues['user_id'] = this.currentUser._id;
+    this.deckService.create(formValues)
+      .map(deck => deck.json())
+      .subscribe(deck => {
+        this.deckService.deckEdit = deck;
+        this.modalRef.hide();
+        this.router.navigate(['deckbuilder'], deck);
+      });
   }
 
 
