@@ -18,6 +18,8 @@ export class DeckbuilderComponent implements OnInit {
   showDecks: boolean = false;
   cardToAdd: Card;
 
+  formats: string[];
+
   constructor(
     private route: ActivatedRoute,
     private deckService: DeckService,
@@ -31,10 +33,12 @@ export class DeckbuilderComponent implements OnInit {
     if (this.currentUser) {
       this.deckService.getByUser(this.currentUser._id)
         .subscribe(decks => {
-          this.decks = decks;
-          this.deck = decks[0];
+          if (decks) {
+            this.decks = decks;
+          }
         });
     }
+    this.formats = ['Commander', 'Standard', 'Modern', 'Vintage', 'Legacy', 'Limited'];
   }
 
   editDeck(deck) {
@@ -65,6 +69,10 @@ export class DeckbuilderComponent implements OnInit {
 
   viewDecks() {
     this.showDecks = !this.showDecks;
+  }
+
+  createNewDeck() {
+
   }
 
 

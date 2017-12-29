@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { tcgConfig } from './app.config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { tcgConfig } from './app.config';
 export class AppComponent implements OnInit {
   constructor(
     private ls: LocalStorageService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) {}
 
   user;
@@ -28,14 +30,15 @@ export class AppComponent implements OnInit {
         this.user = null;
       }
     });
-
-
-
   }
 
   logout() {
     this.authService.logout();
     return false;
+  }
+
+  goHome() {
+    this.router.navigate(['home']);
   }
 
 }

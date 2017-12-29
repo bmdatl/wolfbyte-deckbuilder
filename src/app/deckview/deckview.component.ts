@@ -75,12 +75,12 @@ export class DeckviewComponent implements OnInit {
     });
   }
 
-  getDecks() {
-    this.ds.getAllDecks()
-      .then(decks => {
-        console.log(decks);
-      });
-  }
+  // getDecks() {
+  //   this.ds.getAllDecks()
+  //     .then(decks => {
+  //       console.log(decks);
+  //     });
+  // }
 
   search = (keyword: any) => {
     if (keyword) {

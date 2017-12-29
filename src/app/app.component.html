@@ -1,37 +1,65 @@
- <nav class="site-nav">
-    <ul class="nav">
-      <li class="nav-item">
-        <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>-->
-        <a class="nav-link" href="/home">home</a>
-      </li>
-      <li class="nav-item">
-        <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['search']">search</a>-->
-        <a class="nav-link" href="/search">search</a>
-      </li>
-      <li class="nav-item">
-        <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['decks']">decks</a>-->
-        <a class="nav-link" href="/decks">decks</a>
-      </li>
-      <li class="nav-item" *ngIf="!user;else loggedIn">
-        <a class="nav-link" href="/login">login</a>
-      </li>
-      <ng-template #loggedIn>
-        <li class="nav-item">
-          <a class="nav-link" href="#" (click)="logout()">{{user.username}}: logout</a>
-        </li>
-      </ng-template>
-    </ul>
-  </nav>
-
 <header class="site-header">
-  <div class="container">
+  <div class="header-container">
     <div class="row">
-      <div class="col">
-        <img class="site-logo" src="../assets/img/wolfbyte-logo-4.png" />
+      <div class="col col-auto">
+        <img class="site-logo" src="../assets/img/wolfbyte-logo-4.png" (click)="goHome()" />
       </div>
+      <div class="col col-auto">
+        <h1 class="site-title">Wolfbyte</h1>
+      </div>
+      <div class="col-sm-5">
+        <app-search></app-search>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <nav class="site-nav">
+          <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-8">
+              <ul class="nav">
+                <li class="nav-item">
+                  <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>-->
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>
+                </li>
+                <li class="nav-item">
+                  <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['decks']">decks</a>-->
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['deckbuilder']">deckbuilder</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-3">
+              <ul class="nav">
+                <li class="nav-item" *ngIf="!user;else loggedIn">
+                  <a class="nav-link" href="/login">login</a>
+                </li>
+                <ng-template #loggedIn>
+
+                  <div class="dropdown">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">{{user.username}} <i class="fa fa-angle-double-down"></i></a>
+                    </li>
+                    <div class="dropdown-content">
+                      <a href="#" (click)="goToProfile()">profile</a>
+                      <a href="#" (click)="goToDecks()">my decks</a>
+                      <a href="#" (click)="logout()">logout</a>
+                    </div>
+                  </div>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" (click)="logout()">logout</a>
+                  </li>
+                </ng-template>
+              </ul>
+            </div>
+          </div>
+        </nav>
     </div>
   </div>
 </header>
 
-<router-outlet></router-outlet>
+<div class="main_app">
+  <router-outlet></router-outlet>
+</div>
 

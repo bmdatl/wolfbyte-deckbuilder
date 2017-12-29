@@ -1,10 +1,11 @@
 <div class="container">
   <div class="row text-center">
-    <div class="col-sm-6 offset-3">
+    <div class="col">
         <input auto-complete
                class="form-control"
+               id="main_search"
                type="text"
-               placeholder="search cards"
+               placeholder="search cards..."
                (keypress)="enterKeyPressed($event)"
                [source]="search.bind(this)"
                [list-formatter]="formatSearch"
