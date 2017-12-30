@@ -1,10 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from './shared/services/local-storage.service';
+import { AuthenticationService } from './shared/services/authentication.service';
+import { tcgConfig } from './app.config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app works!';
+export class AppComponent implements OnInit {
+  constructor(
+    private ls: LocalStorageService,
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
+
+  user;
+
+  ngOnInit() {
+    // user a custom localstorage service to subscribe to an observable for change detection
+    //TODO: when logging out, component is changed after it has been checked, which throws an error
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.ls.detectChanges().subscribe(change => {
+      if (change === 'set') {
+        this.user = JSON.parse(localStorage.getItem('currentUser'));
+       } else if (change === 'removed') {
+        this.user = null;
+      }
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+    return false;
+  }
+
+  goHome() {
+    this.router.navigate(['home']);
+  }
+
 }

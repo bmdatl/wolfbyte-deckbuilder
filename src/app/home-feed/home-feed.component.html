@@ -1,0 +1,154 @@
+<div class="deckbuilder_title">
+  BROWSE MAGIC CARDS
+</div>
+
+<br/><br/>
+
+<div class="container">
+  <!--view sets-->
+  <div class="row">
+    <div class="col-sm-6" *ngIf="sets">
+      <h4 class="text-center">sets</h4>
+      <table datatable class="table table-striped table-hover table-condensed"
+      [dtOptions]="setDtOptions">
+        <thead>
+        <tr>
+          <th colspan="1">set</th>
+          <th colspan="1">code</th>
+          <th colspan="1">release</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let set of sets">
+            <td>
+              <a href="#" (click)="getSetCards(set.code, set.name)">{{set.name}}</a>
+            </td>
+            <td>{{set.code}}</td>
+            <td>{{set.releaseDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-sm-6" *ngIf="viewSet">
+      <div class="text-center">
+        <h4>{{viewSet?.currentSet?.toLowerCase()}}</h4>
+        <!--<button *ngIf="!showFilters" class="btn btn-success" (click)="viewFilters()">add filters</button>-->
+        <!--<button *ngIf="showFilters" class="btn btn-success" (click)="viewFilters()">hide filters</button>-->
+      </div>
+      <div class="form-group" *ngIf="showFilters">
+          <span *ngFor="let option of filterOptions" style="font-size: 12px">
+            {{option.name}}
+              <input type="checkbox"
+                     name="options"
+                     [value]="option.value"
+                     [(ngModel)]="option.checked"
+                     (ngModelChange)="optionsChanged(option)">&nbsp;&nbsp;
+          </span>
+      </div>
+
+      <table datatable #cardTable class="table table-striped table-hover table-condensed"
+             [dtOptions]="cardDtOptions" [dtTrigger]="trigger">
+        <thead>
+        <tr>
+          <th colspan="1">name</th>
+          <th colspan="1">type</th>
+          <th colspan="1">rarity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let card of viewSet | cardFilter: (filters.length ? filters : '')">
+        <!--<ng-container *ngFor="let card of viewSet">-->
+          <tr *ngIf="card.rarity !== 'Basic Land'">
+              <td class="hover_img" (click)="showCardModal(template, card)">
+                <a href="#">{{card.name}}<span><img [src]="card.imageUrl" height="350" /></span></a>
+              </td>
+              <td>{{card.type}}</td>
+              <td>
+              <span class="invisible-text">
+                <span *ngIf="card.rarity === 'Mythic Rare'">z</span>
+                <span *ngIf="card.rarity === 'Rare'">y</span>
+                <span *ngIf="card.rarity === 'Uncommon'">x</span>
+                <span *ngIf="card.rarity === 'Common'">w</span>
+            </span>{{card.rarity}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">{{viewCard.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <img [src]="viewCard.imageUrl">
+      </div>
+      <div class="col-sm-6">
+        <label class="text-center">add to existing deck</label>
+        <select class="form-control" id="deck-select">
+          <option *ngFor="let deck of myDecks">
+            {{deck.name}}
+          </option>
+        </select>
+        <button class="btn btn-primary">add to new deck</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #template2>
+  <div class="modal-header">
+    <h4 class="modal-title">create a new deck</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <form [formGroup]="deckForm" (ngSubmit)="submitNewDeck(deckForm.value)">
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="">name</label>
+            <input [formControl]="deckForm.controls['name']" class="form-control form-control-sm" type="text">
+          </div>
+          <div class="col-sm-6">
+            <label for="">format</label>
+            <select class="form-control form-control-sm" [formControl]="deckForm.controls['format']">
+              <option>Standard</option>
+              <option>Modern</option>
+              <option>Commander</option>
+              <option>Limited</option>
+              <option>Vintage</option>
+              <option>Legacy</option>
+            </select>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="">description</label>
+            <textarea [formControl]="deckForm.controls['description']" class="form-control form-control-sm"></textarea>
+          </div>
+        </div>
+        <br/>
+        <div class="row text-center">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-success" [disabled]="!deckForm.valid">submit</button>
+            <button type="button" class="btn btn-danger" (click)="modalRef.hide()">cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+

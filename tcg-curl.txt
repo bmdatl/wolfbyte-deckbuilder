@@ -1,0 +1,6 @@
+curl --include --request POST \
+--header "Content-Type: application/json" \
+--header "Accept: application/json" \
+--header "X-Tcg-Access-Token: 15C916FE-9A28-4777-8E90-EADAD52D1C81" \
+--data-binary "grant_type=client_credentials&client_id=30D51A1F-4A8E-4BD0-B3F9-251F54AC50E0&client_secret=6152F634-4E41-40E9-B09A-C15CF40B6444" \
+'https://api.tcgplayer.com/token'

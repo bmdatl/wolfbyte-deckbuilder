@@ -1,3 +1,67 @@
-<h1>
-  {{title}}
-</h1>
+<header class="site-header">
+  <div class="header-container">
+    <div class="row">
+      <div class="col col-auto">
+        <img class="site-logo" src="../assets/img/wolfbyte-logo-4.png" (click)="goHome()" />
+      </div>
+      <div class="col col-auto">
+        <h1 class="site-title">Wolfbyte</h1>
+      </div>
+      <div class="col-sm-5">
+        <app-search></app-search>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <nav class="site-nav">
+          <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-8">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['deckbuilder']">deckbuilder</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['blog']">articles & guides</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-3">
+              <ul class="nav">
+                <li class="nav-item" *ngIf="!user;else loggedIn">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['login']">login / register</a>
+                </li>
+                <ng-template #loggedIn>
+
+                  <div class="dropdown">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">{{user.username}} <i class="fa fa-angle-double-down"></i></a>
+                    </li>
+                    <div class="dropdown-content">
+                      <a href="#" (click)="goToProfile()">profile</a>
+                      <a href="#" (click)="goToDecks()">my decks</a>
+                      <a href="#" (click)="logout()">logout</a>
+                    </div>
+                  </div>
+                </ng-template>
+              </ul>
+            </div>
+          </div>
+        </nav>
+    </div>
+  </div>
+</header>
+
+<div class="main_app">
+  <router-outlet></router-outlet>
+</div>
+
+<div class="site-footer">
+  this is a project of passion, caffeine, and whiskey, by brendan.
+  hit me up at brendanmdraper@gmail.com, or find me on <a href="www.github.com/bmdatl">github</a>
+</div>
+
