@@ -1,71 +1,38 @@
-<!--<div class="text-center">-->
-  <!--<h2 style="cursor: pointer" (click)="viewDecks()">{{deck?.name}} <span><i class="fa fa-pencil"></i></span></h2>-->
-  <!--<div *ngIf="showDecks" class="row">-->
-    <!--<div class="col-sm-2 offset-5">-->
-      <!--<select *ngIf="showDecks" [(ngModel)]="deck" (ngModelChange)="editDeck(deck)" class="form-control form-control-sm">-->
-        <!--<option *ngFor="let d of decks" [ngValue]="d">-->
-          <!--{{d.name}}-->
-        <!--</option>-->
-      <!--</select>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <!--<div>-->
-    <!--<img class="deck_image" *ngIf="deck?.format === 'Commander'" src="../../assets/img/commander.png">-->
-  <!--</div>-->
-
-<!--</div>-->
-
-
-
-
-
-<!--<h5>my decks</h5>-->
-<!--<div *ngFor="let d of decks" (click)="editDeck(d)">-->
-  <!--<span *ngIf="d.name === deck?.name">•</span> {{d.name}} <br/><br/>-->
-<!--</div>-->
-
-
-<!--<div class="row">-->
-  <!--<div class="col-sm-4 offset-4">-->
-    <!--<div class="input-group">-->
-      <!--<input type="text" class="form-control form-control-sm" placeholder="search cards...">-->
-      <!--<div class="input-group-btn">-->
-        <!--<button class="btn btn-primary" (click)="addCard()">+</button>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<!--<br/>-->
-<div class="deckbuilder_header">
+<div *ngIf="!currentUser">
   <div class="deckbuilder_title">
-    MAGIC THE GATHERING DECKBUILDER
-  </div>
-  <div class="text-center">
-    <button class="btn btn-sm btn-success" (click)="createNewDeck()">build a new deck</button>
-    <!--<h6>create new deck</h6>-->
-    <br/>
-    --or--
+    please login or register to use the deckbuilder!
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-6 offset-3">
-    <div *ngIf="decks" class="text-center">
-      <h6>edit existing:</h6>
-      <div *ngFor="let d of decks" class="deckviewer">
-        <span *ngIf="d.name !== deck?.name" class="item" (click)="editDeck(d)">{{d.name}}</span>
-        <span *ngIf="d.name === deck?.name" class="item-selected">{{d.name}}</span>
-        <br />
-        <img *ngIf="d.image" [src]="d.image">
+<div *ngIf="currentUser">
+  <div class="deckbuilder_header">
+    <div class="deckbuilder_title">
+      MAGIC THE GATHERING DECKBUILDER
+    </div>
+    <div class="text-center">
+      <button class="btn btn-sm btn-success" (click)="createNewDeck()">build a new deck</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 offset-3">
+      <div *ngIf="decks" class="text-center">
+        --- or ---
+        <br/>
+        <h6>edit existing:</h6>
+        <div *ngFor="let d of decks" class="deckviewer">
+          <span *ngIf="d.name !== deck?.name" class="item" (click)="editDeck(d)">{{d.name}}</span>
+          <span *ngIf="d.name === deck?.name" class="item-selected">{{d.name}}</span>
+          <br />
+          <img *ngIf="d.image" [src]="d.image">
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
-<div class="deckbuilder" *ngIf="deck">
+  <div class="deckbuilder" *ngIf="deck">
     <div class="row">
       <div class="col">
         <div class="deck_title_banner">
@@ -82,10 +49,10 @@
               <div class="text-center">
                 format:
                 <select class="form-control form-control-sm">
-                <option *ngFor="let format of formats" [selected]="format === deck.format">
-                  {{format}}
-                </option>
-              </select>
+                  <option *ngFor="let format of formats" [selected]="format === deck.format">
+                    {{format}}
+                  </option>
+                </select>
               </div>
               <!--<input type="text" class="form-control" [placeholder]="deck.name">-->
               <!--<button class="btn btn-danger">{{deck.format.toLowerCase()}}</button>-->
@@ -96,8 +63,8 @@
                 <textarea class="form-control form-control-sm" rows="4"></textarea>
               </div>
               <!--<div class="text-left">-->
-                <!--<br/><br/>-->
-                <!--<button class="btn btn-sm btn-primary">save</button>-->
+              <!--<br/><br/>-->
+              <!--<button class="btn btn-sm btn-primary">save</button>-->
               <!--</div>-->
             </div>
             <div class="col-sm-1">
@@ -106,68 +73,69 @@
           </div>
         </div>
       </div>
-  </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card">
 
-
-  <div class="row">
-    <div class="col">
-      <div class="card">
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-2">
-              <h6><u>creatures</u></h6>
-              <ul *ngIf="deck">
-                <li *ngFor="let creature of deck.creatures">
-                  {{creature.name}}
-                </li>
-              </ul>
-            </div>
-            <div class="col-sm-2">
-              <h6><u>artifacts</u></h6>
-              <ul *ngIf="deck">
-                <li *ngFor="let creature of deck.artifacts">
-                  {{creature.name}}
-                </li>
-              </ul>
-            </div>
-            <div class="col-sm-2">
-              <h6><u>enchantments</u></h6>
-              <ul *ngIf="deck">
-                <li *ngFor="let creature of deck.enchantments">
-                  {{creature.name}}
-                </li>
-              </ul>
-            </div>
-            <div class="col-sm-2">
-              <h6><u>instants</u></h6>
-              <ul *ngIf="deck">
-                <li *ngFor="let creature of deck.instants">
-                  {{creature.name}}
-                </li>
-              </ul>
-            </div>
-            <div class="col-sm-2">
-              <h6><u>sorceries</u></h6>
-              <ul *ngIf="deck">
-                <li *ngFor="let creature of deck.sorceries">
-                  {{creature.name}}
-                </li>
-              </ul>
-            </div>
-            <div class="col-sm-2">
-              <h6><u>planeswalkers</u></h6>
-              <ul *ngIf="deck">
-                <li *ngFor="let creature of deck.planeswalkers">
-                  {{creature.name}}
-                </li>
-              </ul>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-2">
+                <h6>creatures</h6>
+                <ul *ngIf="deck">
+                  <li *ngFor="let creature of deck.creatures">
+                    {{creature.name}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-2">
+                <h6>artifacts</h6>
+                <ul *ngIf="deck">
+                  <li *ngFor="let creature of deck.artifacts">
+                    {{creature.name}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-2">
+                <h6>enchantments</h6>
+                <ul *ngIf="deck">
+                  <li *ngFor="let creature of deck.enchantments">
+                    {{creature.name}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-2">
+                <h6>instants</h6>
+                <ul *ngIf="deck">
+                  <li *ngFor="let creature of deck.instants">
+                    {{creature.name}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-2">
+                <h6>sorceries</h6>
+                <ul *ngIf="deck">
+                  <li *ngFor="let creature of deck.sorceries">
+                    {{creature.name}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-2">
+                <h6>planeswalkers</h6>
+                <ul *ngIf="deck">
+                  <li *ngFor="let creature of deck.planeswalkers">
+                    {{creature.name}}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
+
+
 </div>
 

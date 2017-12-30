@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authService.login(email, password)
       .subscribe(user => {
-        this.router.navigate(['/search']);
+        this.router.navigate(['home']);
       },
         err => {
           this.alertService.error(err);

@@ -6,6 +6,9 @@
 .main_app {
   max-width: 80%;
   margin: auto;
+  min-height: 720px;
+  height: 100%;
+  padding-bottom: 25px;
 }
 
 body {
@@ -49,6 +52,19 @@ option, ul {
   margin-bottom: 20px;
 }
 
+.site-footer {
+  height: 25px;
+  width: 100%;
+  background-color: black;
+  color: lightgray;
+  font-size: 11px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: relative;
+  padding: 5px;
+}
+
 .header-container {
   max-width: 80%;
   min-width: 70%;
@@ -81,12 +97,24 @@ option, ul {
   color: white;
 }
 
+.nav-link {
+
+}
+
+.nav-link-selected {
+  background-color: blueviolet;
+  color: white;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
   color: white;
   min-width: 81px;
-  background-color: black;
+  background-color: transparent;
+  border-right: 1px solid blueviolet;
+  border-left: 1px solid blueviolet;
+  border-bottom: 1px solid blueviolet;
   z-index: 1;
 }
 
@@ -108,13 +136,14 @@ option, ul {
 }
 
 .btn-success {
-  background-color: blueviolet;
-  border: none;
+  background-color: transparent;
+  border: 1px solid blueviolet;
   font-weight: lighter;
 }
 
 .btn-success:hover {
-  background-color: black;
+  background-color: blueviolet;
+  border: 1px solid blueviolet;
 }
 
 .btn-primary {
@@ -244,6 +273,7 @@ label {
 .card {
   max-width: 80%;
   height: auto;
+  border: 1px solid blueviolet;
   border-radius: 10px;
   background-color: black;
   margin: auto;
@@ -262,10 +292,9 @@ label {
   max-width: 80%;
   border-radius: 10px;
   background-color: black;
-  max-height: 250px;
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   border: solid 1px blueviolet;
 }
 
@@ -281,6 +310,10 @@ label {
   background-color: black;
   color: white;
   margin: 5px;
+}
+
+.deckbuilder {
+
 }
 
 .deckbuilder_header {
@@ -305,6 +338,7 @@ label {
   position:relative;
   display: inline-block;
   padding:10px;
+  margin-bottom: 5px;
 }
 
 .deckviewer .item {

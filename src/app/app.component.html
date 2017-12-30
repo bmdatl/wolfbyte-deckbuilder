@@ -20,19 +20,20 @@
             <div class="col-sm-8">
               <ul class="nav">
                 <li class="nav-item">
-                  <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>-->
                   <a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>
                 </li>
                 <li class="nav-item">
-                  <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['decks']">decks</a>-->
                   <a class="nav-link" routerLinkActive="active" [routerLink]="['deckbuilder']">deckbuilder</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['blog']">articles & guides</a>
                 </li>
               </ul>
             </div>
             <div class="col-sm-3">
               <ul class="nav">
                 <li class="nav-item" *ngIf="!user;else loggedIn">
-                  <a class="nav-link" href="/login">login</a>
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['login']">login / register</a>
                 </li>
                 <ng-template #loggedIn>
 
@@ -46,10 +47,6 @@
                       <a href="#" (click)="logout()">logout</a>
                     </div>
                   </div>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="#" (click)="logout()">logout</a>
-                  </li>
                 </ng-template>
               </ul>
             </div>
@@ -61,5 +58,10 @@
 
 <div class="main_app">
   <router-outlet></router-outlet>
+</div>
+
+<div class="site-footer">
+  this is a project of passion, caffeine, and whiskey, by brendan.
+  hit me up at brendanmdraper@gmail.com, or find me on <a href="www.github.com/bmdatl">github</a>
 </div>
 

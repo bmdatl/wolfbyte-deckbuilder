@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   user;
-  tcgToken: string = null;
 
   ngOnInit() {
     // user a custom localstorage service to subscribe to an observable for change detection
