@@ -34,14 +34,9 @@ export class CardService {
   searchCardsByName(name: string): Observable<any> {
     let url = this.mtgUrl + `/cards/?name=${name}&contains=imageUrl`;
     return this.http.get(url)
-      .map(res => res.json().cards)
+      .map(res => res.json())
       .map(data => {
-        // return data;
-        let cards = [];
-        for (let card of data) {
-          cards.push(card);
-        }
-        return cards;
+        return data.cards;
       })
       .catch(this.error);
   }
@@ -121,9 +116,11 @@ export class CardService {
   getTCGCard(name: string): Observable<any> {
     let url = `${this.baseUrl}/cards/getTCGCard/${name}`;
 
-    return this.http.get(url);
-      // .map(results => results.json())
-      // .catch(this.error);
+    return this.http.get(url)
+      .map(results => {
+        return results.json();
+      })
+      .catch(this.error);
   }
 
   private error(err: any) {

@@ -6,6 +6,7 @@ import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { DeckviewComponent } from './deckview/deckview.component';
 import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
 import { LoginComponent } from './login/login.component';
+import { BlogComponent } from './blog/blog.component';
 
 export const appRoutes: Routes = [
   // {
@@ -23,7 +24,8 @@ export const appRoutes: Routes = [
   { path: 'home', component: HomeFeedComponent },
   { path: 'decks', component: DeckviewComponent },
   { path: 'deckbuilder', component: DeckbuilderComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'blog', component: BlogComponent }
 ];
 
 @NgModule({

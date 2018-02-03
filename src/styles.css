@@ -32,6 +32,15 @@ option, ul {
   margin-top: 50px;
 }
 
+#quick_search {
+  font-size: 12px;
+  margin: auto;
+}
+
+.card {
+  color: white;
+}
+
 .card ul {
   color: white;
 }
@@ -280,6 +289,10 @@ label {
   padding: 10px;
 }
 
+.card ul {
+  color: black;
+}
+
 .deck_image {
   max-height: 200px;
   max-width: 200px;
@@ -287,6 +300,37 @@ label {
   height: 200px;
   border-radius: 10px;
 }
+
+.deck_image_commander {
+  max-height: 200px;
+  max-width: 200px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.deck_image_commander:hover {
+  max-height: 200px;
+  max-width: 200px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: .75;
+}
+
+#wrapper .text {
+  visibility: hidden;
+  bottom: 100px;
+  position: relative;
+  margin-bottom: -30px;
+}
+
+#wrapper:hover .text {
+  visibility: visible;
+  cursor: pointer;
+}
+
 
 .deck_title_banner {
   max-width: 80%;
@@ -313,7 +357,7 @@ label {
 }
 
 .deckbuilder {
-
+  width: 100%;
 }
 
 .deckbuilder_header {
@@ -355,6 +399,18 @@ label {
   border: 1px solid blueviolet;
   border-radius: 4px;
   padding: 5px;
+}
+
+.remove-card {
+  color: red;
+  padding-right: 5px;
+  cursor: pointer;
+  margin-left: -40px;
+}
+
+.add-card {
+  color: red;
+  cursor: pointer;
 }
 
 
