@@ -44,9 +44,8 @@ export class DeckbuilderComponent implements OnInit {
     this.formats = ['Commander', 'Standard', 'Modern', 'Vintage', 'Legacy', 'Limited'];
   }
 
-  editDeck(deck) {
-    this.deck = deck;
-    this.showDecks = false;
+  editDeck(e) {
+    console.log(e);
   }
 
   cardClick(card) {
@@ -86,11 +85,10 @@ export class DeckbuilderComponent implements OnInit {
               parseInt(this.deck[cardType][i].quantity += this.quantity);
               this.quantity = 1;
             }
-          } else {
-            card.quantity = this.quantity;
-            this.deck[cardType].push(card);
           }
         }
+        card.quantity = this.quantity;
+        this.deck[cardType].push(card);
       } else {
         card.quantity = this.quantity;
         this.deck[cardType].push(card);
@@ -185,7 +183,7 @@ export class DeckbuilderComponent implements OnInit {
 
   formatSearch = (data: any): string => {
     if (data) {
-      return `${data.name} | ${data.setName}`;
+      return `${data.name}`;
     }
   };
 

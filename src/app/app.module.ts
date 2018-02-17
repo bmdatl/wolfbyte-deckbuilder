@@ -30,6 +30,8 @@ import { AdvCardFiltersComponent } from './shared/components/adv-card-filters/ad
 import { CardFilterPipe } from './shared/pipes/card-filter-pipe';
 import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
 import { BlogComponent } from './blog/blog.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { BlogComponent } from './blog/blog.component';
     ProfileComponent,
     AdvCardFiltersComponent,
     DeckbuilderComponent,
-    BlogComponent
+    BlogComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

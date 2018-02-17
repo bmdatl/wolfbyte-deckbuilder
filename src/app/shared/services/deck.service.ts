@@ -43,3 +43,15 @@ export class DeckService {
     console.error(errMsg); // log to console instead
   }
 }
+
+
+// Accept:application/json, text/plain, */*
+// Accept-Encoding:gzip, deflate
+// Accept-Language:en-US,en;q=0.9
+// Authorization:Basic 3c7ec04008aff7b3ac546c17de0407efe6509b30
+// Connection:keep-alive
+// DNT:1
+// Host:52.45.249.118:8080
+// Origin:http://localhost:4200
+// Referer:http://localhost:4200/login
+// User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36

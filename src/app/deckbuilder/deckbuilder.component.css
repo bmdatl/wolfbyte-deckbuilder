@@ -1,0 +1,139 @@
+#deck-select {
+  margin-bottom: 20px;
+}
+
+select:focus, textarea:focus {
+  background-color: transparent;
+}
+
+.card-container {
+  height: auto;
+}
+
+.card {
+  height: 100%;
+  border-radius: 10px;
+  background-color: rgba(50, 50, 50, .8);
+  padding: 10px;
+}
+
+.card ul {
+  color: black;
+}
+
+.deck_title_banner {
+  /*max-width: 80%;*/
+  border-radius: 10px;
+  background-color: rgba(50, 50, 50, .8);
+  /*margin: auto;*/
+  /*margin-right: auto;*/
+  /*margin-left: auto;*/
+  /*margin-bottom: 10px;*/
+  padding: 10px;
+  /*border: solid 1px blueviolet;*/
+  position: relative;
+}
+
+.deck_title_banner button {
+  /*margin: 5px;*/
+}
+
+.deck_title_banner .btn-danger {
+
+}
+
+.deck_title_banner .form-control {
+  background-color: transparent;
+  color: black;
+  margin: 5px;
+}
+
+.deckbuilder {
+  width: 100%;
+}
+
+.deckbuilder_header {
+  margin-bottom: 25px;
+}
+
+.deckbuilder_header button {
+  margin: 20px;
+}
+
+.deckbuilder_title {
+  text-align: center;
+  font-size: 40px;
+}
+
+.deckbuilder h6 {
+  font-weight: lighter;
+}
+
+.deckbuilder input, select, textarea {
+  background-color: transparent;
+  color: white;
+}
+
+.deckviewer {
+  text-align: center;
+  position:relative;
+  display: inline-block;
+  padding:10px;
+  /*margin-bottom: 5px;*/
+}
+
+.deckviewer .item {
+  cursor: pointer;
+  margin: 1px;
+}
+
+.deckviewer .item:hover {
+  border-bottom: 2px solid deepskyblue;
+}
+
+.deckviewer .item-selected {
+  background-color: transparent;
+  border: 1px solid blueviolet;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.remove-card {
+  color: red;
+  padding-right: 5px;
+  cursor: pointer;
+  margin-left: -40px;
+}
+
+.add-card {
+  color: red;
+  cursor: pointer;
+}
+
+.deck_image {
+  max-height: 200px;
+  max-width: 200px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  margin: auto;
+  position: absolute;
+}
+
+.deck_image_commander {
+  max-height: 200px;
+  max-width: 200px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.deck_image_commander:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
+.card option, ul {
+  color: black;
+}
