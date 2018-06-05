@@ -1,6 +1,6 @@
 @font-face {
   font-family: Blox;
-  src: url("assets/fonts/Blox2.ttf");
+  src: url("/assets/fonts/Blox2.ttf");
 }
 
 .main_app {
@@ -12,7 +12,7 @@
 }
 
 body {
-  background-image: url("./assets/img/spiration dark.png");
+  background-image: url("/assets/img/spiration dark.png");
   /*background-color: slategray;*/
   color: white;
   font-size: 13px;
@@ -200,11 +200,11 @@ table {
 }
 
 table td {
-  background-image: url("./assets/img/spiration dark.png");
+  background-image: url("/assets/img/spiration dark.png");
 }
 
 .dataTables_wrapper td {
-  background-image: url("./assets/img/spiration dark.png");
+  background-image: url("/assets/img/spiration dark.png");
 }
 
 .dataTables_wrapper label {
@@ -285,14 +285,20 @@ label {
   cursor: pointer;
 }
 
-
-
-
-
-
-
-
-
-
-
-
+.link {
+  color: deepskyblue;
+  transition: .2s;
+  cursor: pointer;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.link .tiny {
+  font-size: .6em;
+}
+.link .small {
+  font-size: .8em;
+}
+.link .large {
+  font-size: 1.2em;
+}
