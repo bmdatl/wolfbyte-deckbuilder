@@ -2,6 +2,7 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { CardService } from '../shared/services/cards.service';
 import { Card, Set, Legality, Ruling, ForeignName } from '../shared/entities/exports';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { Router } from '../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -24,7 +25,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private cs: CardService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -100,6 +102,10 @@ export class SearchComponent implements OnInit {
   showCardModal(template) {
     this.modalRef = this.modalService.show(template);
     return false;
+  }
+
+  goToAdvancedSearch() {
+    this.router.navigate(['advanced-search']);
   }
 
 }

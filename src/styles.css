@@ -4,11 +4,12 @@
 }
 
 .main_app {
-  max-width: 80%;
-  margin: auto;
+  /* max-width: 80%; */
+  /* margin: auto; */
   min-height: 720px;
   height: 100%;
-  padding-bottom: 25px;
+  width: 100%;
+  padding-bottom: 10em;
 }
 
 body {
@@ -47,11 +48,13 @@ option, ul {
 }
 
 .site-title {
-
+  
 }
 
 .site-header {
   margin-bottom: 20px;
+  width: 100%;
+  margin: auto;
 }
 
 .site-footer {
@@ -68,8 +71,9 @@ option, ul {
 }
 
 .header-container {
-  max-width: 80%;
-  min-width: 70%;
+  width: 100%;
+  /* max-width: 100%; */
+  /* min-width: 70%; */
   margin: auto;
 }
 
@@ -245,13 +249,14 @@ label {
   position: relative;
 }
 
-.hover_img a span {
+.hover_img a img {
   position: absolute;
+  bottom: 1.5em;
   display: none;
   z-index: 99;
 }
 
-.hover_img a:hover span {
+.hover_img a:hover img {
   display: block;
 }
 
@@ -302,3 +307,4 @@ label {
 .link .large {
   font-size: 1.2em;
 }
+

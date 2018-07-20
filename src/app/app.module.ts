@@ -32,6 +32,7 @@ import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
 import { BlogComponent } from './blog/blog.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { FooterComponent } from './footer/footer.component';
     DeckbuilderComponent,
     BlogComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AdvancedSearchComponent
   ],
   imports: [
     BrowserModule,

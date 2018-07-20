@@ -49,7 +49,7 @@ select:focus, textarea:focus {
 }
 
 .deckbuilder {
-  width: 100%;
+width: 100%;
 }
 
 .deckbuilder_header {
@@ -62,7 +62,8 @@ select:focus, textarea:focus {
 
 .deckbuilder_title {
   text-align: center;
-  font-size: 40px;
+  font-size: 40px !important;
+  margin-top: 4em;
 }
 
 .deckbuilder h6 {
@@ -121,10 +122,10 @@ select:focus, textarea:focus {
 }
 
 .deck_image_commander {
-  max-height: 200px;
+  /* max-height: 200px; */
   max-width: 200px;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: auto;
   border-radius: 10px;
   margin: auto;
 }
@@ -136,4 +137,15 @@ select:focus, textarea:focus {
 
 .card option, ul {
   color: black;
+}
+
+form input.form-control {
+  background-color: transparent;
+  color: white;
+}
+form textarea.form-control {
+  color: white;
+}
+form select.form-control {
+  color: white;
 }

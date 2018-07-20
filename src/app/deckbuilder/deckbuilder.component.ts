@@ -1,9 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DeckService } from '../shared/services/deck.service';
 import { CardService } from '../shared/services/cards.service';
 
+import { DECK_FORMATS } from '../app.config';
+
 import { Card } from '../shared/entities/card';
+import { Deck } from '../shared/entities/deck';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forEach } from '@angular/router/src/utils/collection';
+
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-deckbuilder',
@@ -20,14 +28,26 @@ export class DeckbuilderComponent implements OnInit {
   cardSearch: Card;
   quantity: number = 1;
   cardToAdd: Card;
+  viewCard: Card;
 
-  formats: string[];
+  modalRef: BsModalRef;
+
+  formats = DECK_FORMATS;
+
+  deckForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private deckService: DeckService,
-    private cardService: CardService
+    private cardService: CardService,
+    private formBuilder: FormBuilder,
+    private modalService: BsModalService
   ) {
+    this.deckForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      format: [null, Validators.required],
+      description: null
+    });
   }
 
   ngOnInit() {
@@ -41,11 +61,14 @@ export class DeckbuilderComponent implements OnInit {
           }
         });
     }
-    this.formats = ['Commander', 'Standard', 'Modern', 'Vintage', 'Legacy', 'Limited'];
   }
 
   editDeck(e) {
-    console.log(e);
+    for (let f of this.formats) {
+      if (f.name === e.format) {
+        e.format = f;
+      }  
+    }
   }
 
   cardClick(card) {
@@ -55,8 +78,7 @@ export class DeckbuilderComponent implements OnInit {
 
   addCard(cardType?, inc_card?) {
     let card = inc_card ? inc_card : this.cardSearch;
-
-    console.log(card);
+    this.cardSearch = null;
 
     if (!cardType && card) {
       if (card.types.includes('Planeswalker')) {
@@ -133,7 +155,9 @@ export class DeckbuilderComponent implements OnInit {
   }
 
   updateDeck() {
-    this.deckService.update(this.deck._id, this.deck)
+    let deckValues = this.deck;
+    delete deckValues['createdAt'];
+    this.deckService.update(this.deck._id, deckValues)
       .subscribe(res => {
         console.log(this.deck);
         this.quantity = 1;
@@ -153,8 +177,12 @@ export class DeckbuilderComponent implements OnInit {
     this.showDecks = !this.showDecks;
   }
 
-  createNewDeck() {
-
+  createDeck(formValues) {
+    formValues['user_id'] = this.currentUser._id;
+    this.deckService.create(formValues)
+      .subscribe(res => {
+        this.deck = res;
+      });
   }
 
   saveDeck() {
@@ -198,6 +226,41 @@ export class DeckbuilderComponent implements OnInit {
       });
   }
 
+  openCardModal(template: TemplateRef<any>, card) {
+    this.viewCard = card;
+    this.modalRef = this.modalService.show(template);
+    return false;
+  }
 
+  canBeCommander(card: Card) {
+    return (card.type.includes('Legendary Creature') || card.text.includes('can be your commander')); 
+  }
+
+  setCommander(card: Card) {
+    //TODO: support multiple commanders.
+    if (this.deck.commanders.length) {
+      this.addCard(this.formatType(this.deck.commanders[0]), this.deck.commanders[0]); 
+    }
+    this.deck.commanders[0] = card;
+    this.removeCard(this.formatType(card), card);
+  }
+
+  formatType(card) {
+    if (card.type.includes('Creature')) {
+      return 'creatures';
+    } else if (card.type.includes('Land')) {
+      return 'lands';
+    } else if (card.type.includes('Instant')) {
+      return 'instants';
+    } else if (card.type.includes('Sorcery')) {
+      return 'sorceries';
+    } else if (card.type.includes('Enchantment')) {
+      return 'enchantments';
+    } else if (card.type.includes('Artifact')) {
+      return 'artifacts';
+    } else if (card.type.includes('Planeswalker')) {
+      return 'planeswalkers';
+    } 
+  }
 
 }

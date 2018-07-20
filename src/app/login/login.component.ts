@@ -94,6 +94,8 @@ export class LoginComponent implements OnInit {
     let email = formValues.account,
         password = formValues.password;
 
+    console.log(email, password);
+
     this.loading = true;
     this.authService.login(email, password)
       .subscribe(user => {
@@ -115,8 +117,11 @@ export class LoginComponent implements OnInit {
     let formValues = form.value;
     delete formValues['passwordConfirmation'];
 
+    console.log(formValues);
+
     this.userService.create(formValues)
       .subscribe(user => {
+        console.log(user);
         this.alertService.success('Registration successful', true);
         this.router.navigate(['/search']);
       },

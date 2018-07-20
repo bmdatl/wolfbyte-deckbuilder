@@ -1,23 +1,23 @@
 <header class="site-header">
   <div class="header-container">
     <div class="row">
-      <div class="col col-auto">
-        <img class="site-logo" src="../../assets/img/wolfbyte-logo-4.png" (click)="goHome()" />
-      </div>
-      <div class="col col-auto">
+      <!-- <div class="col-4 text-center">
+        
+      </div> -->
+      <div class="col-12 text-center">
+          <img class="site-logo" src="../../assets/img/wolfbyte-logo-4.png" (click)="goHome()" />
         <h1 class="site-title">Wolfbyte</h1>
       </div>
-      <div class="col-sm-5">
+      <div class="col-4 offset-4">
         <app-search></app-search>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8 offset-2">
       <nav class="site-nav">
         <div class="row">
-          <div class="col-sm-1"></div>
-          <div class="col-sm-8">
+          <div class="col-sm-10 text-center">
             <ul class="nav">
               <li class="nav-item">
                 <a class="nav-link" routerLinkActive="active" [routerLink]="['home']">home</a>
@@ -30,7 +30,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <ul class="nav">
               <li class="nav-item" *ngIf="!user;else loggedIn">
                 <a class="nav-link" routerLinkActive="active" [routerLink]="['login']">login / register</a>

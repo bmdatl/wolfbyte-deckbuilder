@@ -1,21 +1,53 @@
 <div *ngIf="!currentUser">
   <div class="deckbuilder_title">
-    please login or register to use the deckbuilder!
+    please <a href="/login">login</a> or <a href="/login">register</a> to use the deckbuilder!
   </div>
 </div>
 
 <div *ngIf="currentUser">
   <div class="deckbuilder_header">
-    <div class="deckbuilder_title">
+    <div class="deckbuilder_title text-center">
       MAGIC THE GATHERING DECKBUILDER
     </div>
     <div class="text-center">
-      <button class="btn btn-sm btn-success" (click)="getTCGCard('murder')">build a new deck</button>
+      <button class="btn btn-sm btn-success" (click)="deckModal.show()">build a new deck</button>
     </div>
+ 
+<div bsModal #deckModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name2" class="modal-title">Create new deck</h4>
+        <button type="button" class="close" aria-label="Close" style="padding: 0;" (click)="deckModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="deckForm" (ngSubmit)="createDeck(deckForm.value)">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" id="name" formControlName="name">
+            <label for="format">Format</label>
+            <select class="form-control" id="format" formControlName="format">
+              <option *ngFor="let val of formats" [ngValue]="val.name">{{val.name}}</option>
+            </select>
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="4" formControlName="description">
+
+            </textarea>
+            <div class="col-sm-4 offset-4">
+              <button type="submit" class="btn btn-success" (click)="deckModal.hide()">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 
   <div class="row">
-    <div class="col-sm-6 offset-3">
+    <div class="col-8 offset-2">
       <div *ngIf="decks" class="text-center">
         --- or ---
         <br/>
@@ -41,39 +73,48 @@
 
   <div class="deckbuilder" *ngIf="deck">
     <div class="row">
-      <div class="col-sm-7 offset-1 card-container">
+      <div class="col-sm-6 offset-1 card-container">
         <!--<div class="deck_title_banner">-->
         <div class="card">
           <div class="row">
             <div class="col-sm-4">
-              <span *ngIf="deck.format === 'Commander'" id="wrapper">
-                <img *ngIf="!deck.commander" class="deck_image_commander" src="../../assets/img/commander.png" (click)="commanderModal()">
-                <img *ngIf="deck.commander" class="deck_image_commander" [src]="deck.commander.imageUrl" (click)="commanderModal()">
-                <p class="text">assign a commander</p>
+              <span *ngIf="deck.format.name === 'Commander'" id="wrapper">
+                <label>Commander</label>
+                <img *ngIf="!deck.commanders?.length" class="deck_image_commander" src="../../assets/img/commander.png" (click)="commanderModal()">
+                <img *ngIf="deck.commanders?.length" class="deck_image_commander" [src]="deck.commanders[0]?.imageUrl" (click)="commanderModal()">
+                <!-- <p class="text">assign a commander</p> -->
               </span>
 
-              <img class="deck_image" *ngIf="deck.format === 'Standard'" src="../../assets/img/standard.png">
+              <img class="deck_image" *ngIf="deck.format.name === 'Standard'" src="../../assets/img/standard.png">
             </div>
-            <div class="col-sm-3">
-              <div class="text-center">
-                name:
-                <input class="form-control form-control-sm" type="text" [placeholder]="deck.name">
+            <div class="col-sm-8">
+            <div class="form-group row">
+              <div class="col-sm-6">
+                  name:
+                  <input class="form-control form-control-sm" type="text" [placeholder]="deck.name">
               </div>
-              <div class="text-center">
-                format:
-                <select class="form-control form-control-sm">
-                  <option *ngFor="let format of formats" [selected]="format === deck.format">
-                    {{format}}
-                  </option>
-                </select>
-              </div>
+                <div class="col-sm-6">
+                  format:
+                  <select class="form-control form-control-sm">
+                    <option *ngFor="let format of formats" [selected]="format === deck.format">
+                      {{format.name}}
+                    </option>
+                  </select>
+                </div>
             </div>
-            <div class="col-sm-5">
-              <div class="text-center">
-                description:
-                <textarea class="form-control form-control-sm" rows="4"></textarea>
-              </div>
+            
+            <div class="form-group">
+                <div class="text-center">
+                  description:
+                  <textarea class="form-control form-control-sm" rows="4" [(ngModel)]="deck.description"></textarea>
+                </div>
             </div>
+
+            <div class="form-group">
+              Cards: {{deck.totalCards}}
+            </div>
+
+          </div>
           </div>
 
           <div class="row">
@@ -125,12 +166,21 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col">
-              <button class="btn btn-primary" (click)="addCard()">add to deck</button>
-            </div>
-          </div>
+          <div *ngIf="cardSearch?.id">
+              <div class="row">
+                  <div class="col-sm-8 offset-1">
+                    <img style="border-radius: 10px;" [src]="cardSearch.imageUrl">
+                  </div>
+                </div>
 
+                <br>
+      
+                <div class="row">
+                  <div class="col-sm-6 offset-3">
+                    <button class="btn btn-primary" (click)="addCard()">add to deck</button>
+                  </div>
+                </div>
+          </div>
           </div>
         </div>
     </div>
@@ -149,8 +199,8 @@
                 <ul>
                   <li *ngFor="let card of deck.creatures" class="hover_img">
                     <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('creatures', card)">-</i>
-                    <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
-                    <i *ngIf="card.quantity < 4" class="add-card" (click)="addOne(card)">+</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                     <!--<i class="add-card" (click)="removeAllCards(card)">X</i>-->
                   </li>
                 </ul>
@@ -161,8 +211,8 @@
                 <ul>
                   <li *ngFor="let card of deck.artifacts" class="hover_img">
                     <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('artifacts', card)">-</i>
-                    <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
-                    <i *ngIf="card.quantity < 4" class="add-card" (click)="addOne(card)">+</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
@@ -172,8 +222,8 @@
                 <ul>
                   <li *ngFor="let card of deck.enchantments" class="hover_img">
                     <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('enchantments', card)">-</i>
-                    <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
-                    <i *ngIf="card.quantity < 4" class="add-card" (click)="addOne(card)">+</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
@@ -185,8 +235,8 @@
                 <ul>
                   <li *ngFor="let card of deck.instants" class="hover_img">
                     <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('instants', card)">-</i>
-                    <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
-                    <i *ngIf="card.quantity < 4" class="add-card" (click)="addOne(card)">+</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
@@ -196,8 +246,8 @@
                 <ul>
                   <li *ngFor="let card of deck.sorceries" class="hover_img">
                     <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('sorceries', card)">-</i>
-                    <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
-                    <i *ngIf="card.quantity < 4" class="add-card" (click)="addOne(card)">+</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
@@ -207,8 +257,8 @@
                 <ul>
                   <li *ngFor="let card of deck.planeswalkers" class="hover_img">
                     <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('planeswalkers', card)">-</i>
-                    <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
-                    <i *ngIf="card.quantity < 4" class="add-card" (click)="addOne(card)">+</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
@@ -220,7 +270,7 @@
               <ul>
                 <li *ngFor="let card of deck.lands" class="hover_img">
                   <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('lands', card)">-</i>
-                  <a href="#" (click)="cardClick(card)">{{card.name}} ({{card.quantity}})<span><img [src]="card.imageUrl" height="350" /></span></a>
+                  <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
                   <i class="add-card" (click)="addOne(card)">+</i>
                 </li>
               </ul>
@@ -233,4 +283,24 @@
 
 
 </div>
+
+<ng-template #cardModal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{viewCard.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <img [src]="viewCard.imageUrl">
+          </div>
+          <div class="col-sm-6">
+            <button *ngIf="canBeCommander(viewCard)"
+            class="btn btn-primary" (click)="setCommander(viewCard)">Set as Commander</button>
+          </div>
+        </div>
+      </div>
+  </ng-template>
 

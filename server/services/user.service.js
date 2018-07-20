@@ -55,9 +55,12 @@ function createUser(body) {
       body.password = hashed_pw;
       let newUser = new User(body);
 
+      console.log(newUser);
+
       newUser.save(function(err, doc) {
         if (err) {
           deferred.reject(err.name + ': ' + err.message);
+          console.log(err.message);
         }
         deferred.resolve();
       });

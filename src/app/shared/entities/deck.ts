@@ -21,18 +21,4 @@ export class Deck {
   public colorIdentity?: string;
   public priceEstimate?: string;
 
-
-  // public numCards: number;
-  // public numLand: number;
-  // public numCreature: number;
-  // public numEnchantment: number;
-  // public numSorcery: number;
-  // public numInstant: number;
-  // public numArtifact: number;
-  // public numPlaneswalker: number;
-  // public colors: string[];
-  // public colorIdentity: string;
-  // public priceEstimates: string[];
-  // public upvotes: number;
-
 }
