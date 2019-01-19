@@ -1,5 +1,5 @@
-<div class="deckbuilder_title">
-  BROWSE MAGIC CARDS
+<div class="deckbuilder-title text-center">
+  <h1>BROWSE CARDS</h1>
 </div>
 
 <br/><br/>
@@ -7,7 +7,7 @@
 <div class="container">
   <!--view sets-->
   <div class="row">
-    <div class="col-sm-6" *ngIf="sets">
+    <div [ngClass]="{'col-sm-6 offset-3': sets && !viewSet, 'col-sm-6': sets && viewSet}" *ngIf="sets">
       <h4 class="text-center">sets</h4>
       <table datatable class="table table-striped table-hover table-condensed"
       [dtOptions]="setDtOptions">
@@ -61,7 +61,7 @@
         <!--<ng-container *ngFor="let card of viewSet">-->
           <tr *ngIf="card.rarity !== 'Basic Land'">
               <td class="hover_img" (click)="showCardModal(template, card)">
-                <a href="#">{{card.name}}<span><img [src]="card.imageUrl" height="350" /></span></a>
+                <a href="#">{{card.name}}<img [src]="card.imageUrl" height="350" /></a>
               </td>
               <td>{{card.type}}</td>
               <td>

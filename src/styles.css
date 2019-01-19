@@ -1,21 +1,23 @@
 @font-face {
   font-family: Blox;
-  src: url("assets/fonts/Blox2.ttf");
+  src: url("/assets/fonts/Blox2.ttf");
 }
 
 .main_app {
-  max-width: 80%;
-  margin: auto;
+  /* max-width: 80%; */
+  /* margin: auto; */
   min-height: 720px;
   height: 100%;
-  padding-bottom: 25px;
+  width: 100%;
+  padding-bottom: 10em;
 }
 
 body {
-  background-image: url("./assets/img/spiration dark.png");
+  background-image: url("/assets/img/spiration dark.png");
+  /*background-color: slategray;*/
   color: white;
   font-size: 13px;
-  font-family: Avenir;
+  font-family: Avenir, sans-serif;
 }
 
 body h2 {
@@ -32,8 +34,9 @@ option, ul {
   margin-top: 50px;
 }
 
-.card ul {
-  color: white;
+#quick_search {
+  font-size: 12px;
+  /*margin: auto;*/
 }
 
 .site-logo {
@@ -45,11 +48,13 @@ option, ul {
 }
 
 .site-title {
-
+  
 }
 
 .site-header {
   margin-bottom: 20px;
+  width: 100%;
+  margin: auto;
 }
 
 .site-footer {
@@ -66,8 +71,9 @@ option, ul {
 }
 
 .header-container {
-  max-width: 80%;
-  min-width: 70%;
+  width: 100%;
+  /* max-width: 100%; */
+  /* min-width: 70%; */
   margin: auto;
 }
 
@@ -198,11 +204,11 @@ table {
 }
 
 table td {
-  background-image: url("./assets/img/spiration dark.png");
+  background-image: url("/assets/img/spiration dark.png");
 }
 
 .dataTables_wrapper td {
-  background-image: url("./assets/img/spiration dark.png");
+  background-image: url("/assets/img/spiration dark.png");
 }
 
 .dataTables_wrapper label {
@@ -230,8 +236,9 @@ table td {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-select {
 
+select, input {
+  margin-bottom: 20px;
 }
 
 label {
@@ -242,13 +249,14 @@ label {
   position: relative;
 }
 
-.hover_img a span {
+.hover_img a img {
   position: absolute;
+  bottom: 1.5em;
   display: none;
   z-index: 99;
 }
 
-.hover_img a:hover span {
+.hover_img a:hover img {
   display: block;
 }
 
@@ -270,97 +278,33 @@ label {
   color: white;
 }
 
-.card {
-  max-width: 80%;
-  height: auto;
-  border: 1px solid blueviolet;
-  border-radius: 10px;
-  background-color: black;
-  margin: auto;
-  padding: 10px;
+#wrapper .text {
+  visibility: hidden;
+  bottom: 100px;
+  position: relative;
+  margin-bottom: -30px;
 }
 
-.deck_image {
-  max-height: 200px;
-  max-width: 200px;
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-}
-
-.deck_title_banner {
-  max-width: 80%;
-  border-radius: 10px;
-  background-color: black;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 10px;
-  border: solid 1px blueviolet;
-}
-
-.deck_title_banner button {
-  margin: 5px;
-}
-
-.deck_title_banner .btn-danger {
-
-}
-
-.deck_title_banner .form-control {
-  background-color: black;
-  color: white;
-  margin: 5px;
-}
-
-.deckbuilder {
-
-}
-
-.deckbuilder_header {
-  margin-bottom: 25px;
-}
-
-.deckbuilder_header button {
-  margin: 20px;
-}
-
-.deckbuilder_title {
-  text-align: center;
-  font-size: 40px;
-}
-
-.deckbuilder h6 {
-  font-weight: lighter;
-}
-
-.deckviewer {
-  text-align: center;
-  position:relative;
-  display: inline-block;
-  padding:10px;
-  margin-bottom: 5px;
-}
-
-.deckviewer .item {
+#wrapper:hover .text {
+  visibility: visible;
   cursor: pointer;
-  margin: 1px;
 }
 
-.deckviewer .item:hover {
-  border-bottom: 2px solid deepskyblue;
+.link {
+  color: deepskyblue;
+  transition: .2s;
+  cursor: pointer;
 }
-
-.deckviewer .item-selected {
-  background-color: transparent;
-  border: 1px solid blueviolet;
-  border-radius: 4px;
-  padding: 5px;
+.link:hover {
+  text-decoration: underline;
 }
-
-
-
-
-
-
-
+.link .tiny {
+  font-size: .6em;
+}
+.link .small {
+  font-size: .8em;
+}
+.link .large {
+  font-size: 1.2em;
+}
 

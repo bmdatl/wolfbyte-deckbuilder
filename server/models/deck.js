@@ -14,7 +14,7 @@ const DeckSchema = new mongoose.Schema(
       trim: true
     },
     format: {
-      type: String,
+      type: Object,
       required: true,
       trim: true
     },

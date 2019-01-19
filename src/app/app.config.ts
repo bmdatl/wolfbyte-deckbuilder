@@ -1,5 +1,5 @@
 export const appConfig = {
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'http://6985611d.ngrok.io',
 };
 
 export const tcgConfig = {
@@ -10,3 +10,48 @@ export const tcgConfig = {
   token: "15C916FE-9A28-4777-8E90-EADAD52D1C81",
   appId: 1304
 };
+
+export const DECK_FORMATS = [
+  {
+    name: 'Commander',
+    alt: 'EDH',
+    cards: 100,
+    allowDupes: false,
+    lifeTotal: 40
+  },
+  {
+    name: 'Modern',
+    alt: 'Modern',
+    cards: 60,
+    allowDupes: true,
+    lifeTotal: 20
+  },
+  {
+    name: 'Standard',
+    alt: 'Standard',
+    cards: 60,
+    allowDupes: true,
+    lifeTotal: 20
+  },
+  {
+    name: 'Legacy',
+    alt: 'Legacy',
+    cards: 60,
+    allowDupes: true,
+    lifeTotal: 20
+  },
+  {
+    name: 'Vintage',
+    alt: 'Vintage',
+    cards: 60,
+    allowDupes: true,
+    lifeTotal: 20
+  },
+  {
+    name: 'Tiny Leaders',
+    alt: 'Tiny EDH',
+    cards: 50,
+    allowDupes: false,
+    lifeTotal: 30
+  }
+];

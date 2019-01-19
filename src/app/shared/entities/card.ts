@@ -33,6 +33,9 @@ export class Card {
   public subtypes: string[] = null;
   public supertypes: string[] = null;
 
+  // for decks
+  public quantity: number = 1;
+
   constructor(data = null) {
     if (data) {
       for (let key in data) {

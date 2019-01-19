@@ -26,7 +26,8 @@ export class DeckService {
   }
 
   create(deck: Deck) {
-    return this.http.post('/decks', deck);
+    return this.http.post('/decks', deck)
+      .map((response: Response) => response.json());
   }
 
   update(_id: string, data: any) {

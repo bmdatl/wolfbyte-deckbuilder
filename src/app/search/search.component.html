@@ -15,8 +15,14 @@
                (ngModelChange)="goToCard(template)"
         />
           <button hidden class="btn btn-success" (click)="searchCards()" id="searchBtn"><i class="fa fa-search"></i></button>
-      <br/>
-      <!--<button class="btn btn-sm btn-success">+ advanced search</button>-->
+      <!-- <button class="btn btn-sm btn-success">+ advanced search</button> -->
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col">
+      <div class="link tiny">
+        <span (click)="goToAdvancedSearch()">advanced search</span>
+      </div>
     </div>
   </div>
   <br/><br/>

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app.routing';
@@ -29,6 +29,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdvCardFiltersComponent } from './shared/components/adv-card-filters/adv-card-filters.component';
 import { CardFilterPipe } from './shared/pipes/card-filter-pipe';
 import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
+import { BlogComponent } from './blog/blog.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
     AlertComponent,
     ProfileComponent,
     AdvCardFiltersComponent,
-    DeckbuilderComponent
+    DeckbuilderComponent,
+    BlogComponent,
+    HeaderComponent,
+    FooterComponent,
+    AdvancedSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +71,7 @@ import { DeckbuilderComponent } from './deckbuilder/deckbuilder.component';
     LocalStorageService,
     myHttpProvider
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

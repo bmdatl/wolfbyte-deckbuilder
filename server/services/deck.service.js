@@ -89,11 +89,11 @@ function updateDeck(_id, body) {
     }
 
     if (deck) {
-      Deck.update({ _id: _id }, data, function (err, doc) {
+      Deck.update({ _id: _id }, body, function (err, doc) {
         if (err) {
           deferred.reject(err.name + ': ' + err.message);
         }
-        deferred.resolve(data);
+        deferred.resolve(body);
       });
     }
   });

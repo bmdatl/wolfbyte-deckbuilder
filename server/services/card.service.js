@@ -61,12 +61,13 @@ function saveToken(token) {
 function checkDbToken() {
   let deferred = Q.defer();
 
-  Token.findOne({ '.expires': { $gt: new Date() }}, function(err, token) {
+  Token.findOne({ 'expires': { $gt: new Date() }}, function(err, token) {
     if (err) {
       deferred.reject(err.name);
     }
 
     if (token) {
+      console.log(token);
       deferred.resolve(token);
     } else {
       getToken()
@@ -106,6 +107,20 @@ function getTCGCard(cardName) {
         req.end();
       });
   });
+}
+
+function getTCGSets() {
+
+  return new Promise(function(resolve, reject) {
+    checkDbToken()
+      .then(res => {
+        let token = 'bearer' + res.access_token;
+        let options = {
+          hostname: 'api.tcgplayer.com',
+          path: encodeURI(`/catalog/products?categoryId=`)
+        }
+      })
+  })
 }
 
 function encodeUri(uri) {

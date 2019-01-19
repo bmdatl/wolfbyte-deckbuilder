@@ -1,141 +1,306 @@
 <div *ngIf="!currentUser">
   <div class="deckbuilder_title">
-    please login or register to use the deckbuilder!
+    please <a href="/login">login</a> or <a href="/login">register</a> to use the deckbuilder!
   </div>
 </div>
 
 <div *ngIf="currentUser">
   <div class="deckbuilder_header">
-    <div class="deckbuilder_title">
+    <div class="deckbuilder_title text-center">
       MAGIC THE GATHERING DECKBUILDER
     </div>
     <div class="text-center">
-      <button class="btn btn-sm btn-success" (click)="createNewDeck()">build a new deck</button>
+      <button class="btn btn-sm btn-success" (click)="deckModal.show()">build a new deck</button>
     </div>
+ 
+<div bsModal #deckModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name2" class="modal-title">Create new deck</h4>
+        <button type="button" class="close" aria-label="Close" style="padding: 0;" (click)="deckModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="deckForm" (ngSubmit)="createDeck(deckForm.value)">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" id="name" formControlName="name">
+            <label for="format">Format</label>
+            <select class="form-control" id="format" formControlName="format">
+              <option *ngFor="let val of formats" [ngValue]="val.name">{{val.name}}</option>
+            </select>
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="4" formControlName="description">
+
+            </textarea>
+            <div class="col-sm-4 offset-4">
+              <button type="submit" class="btn btn-success" (click)="deckModal.hide()">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 
   <div class="row">
-    <div class="col-sm-6 offset-3">
+    <div class="col-8 offset-2">
       <div *ngIf="decks" class="text-center">
         --- or ---
         <br/>
         <h6>edit existing:</h6>
-        <div *ngFor="let d of decks" class="deckviewer">
-          <span *ngIf="d.name !== deck?.name" class="item" (click)="editDeck(d)">{{d.name}}</span>
-          <span *ngIf="d.name === deck?.name" class="item-selected">{{d.name}}</span>
-          <br />
-          <img *ngIf="d.image" [src]="d.image">
+        <!--<div *ngFor="let d of decks" class="deckviewer">-->
+          <!--<span *ngIf="d.name !== deck?.name" class="item" (click)="editDeck(d)">{{d.name}}</span>-->
+          <!--<span *ngIf="d.name === deck?.name" class="item-selected">{{d.name}}</span>-->
+          <!--<br />-->
+          <!--<img *ngIf="d.image" [src]="d.image">-->
+        <!--</div>-->
+        <div class="col-sm-6 offset-3">
+          <label for="deck-select"></label>
+          <select class="form-control" id="deck-select" [(ngModel)]="deck" (ngModelChange)="editDeck($event)">
+            <option *ngFor="let d of decks" [ngValue]="d">
+              {{d.name}}
+            </option>
+          </select>
         </div>
       </div>
     </div>
   </div>
 
 
-
   <div class="deckbuilder" *ngIf="deck">
     <div class="row">
-      <div class="col">
-        <div class="deck_title_banner">
+      <div class="col-sm-6 offset-1 card-container">
+        <!--<div class="deck_title_banner">-->
+        <div class="card">
           <div class="row">
-            <div class="col-sm-3">
-              <img class="deck_image" *ngIf="deck.format === 'Commander'" src="../../assets/img/commander.png">
-              <img class="deck_image" *ngIf="deck.format === 'Standard'" src="../../assets/img/standard.png">
+            <div class="col-sm-4">
+              <span *ngIf="deck.format.name === 'Commander'" id="wrapper">
+                <label>Commander</label>
+                <img *ngIf="!deck.commanders?.length" class="deck_image_commander" src="../../assets/img/commander.png" (click)="commanderModal()">
+                <img *ngIf="deck.commanders?.length" class="deck_image_commander" [src]="deck.commanders[0]?.imageUrl" (click)="commanderModal()">
+                <!-- <p class="text">assign a commander</p> -->
+              </span>
+
+              <img class="deck_image" *ngIf="deck.format.name === 'Standard'" src="../../assets/img/standard.png">
             </div>
-            <div class="col-sm-3">
-              <div class="text-center">
-                name:
-                <input class="form-control form-control-sm" type="text" [placeholder]="deck.name">
+            <div class="col-sm-8">
+            <div class="form-group row">
+              <div class="col-sm-6">
+                  name:
+                  <input class="form-control form-control-sm" type="text" [placeholder]="deck.name">
               </div>
-              <div class="text-center">
-                format:
-                <select class="form-control form-control-sm">
-                  <option *ngFor="let format of formats" [selected]="format === deck.format">
-                    {{format}}
-                  </option>
-                </select>
-              </div>
-              <!--<input type="text" class="form-control" [placeholder]="deck.name">-->
-              <!--<button class="btn btn-danger">{{deck.format.toLowerCase()}}</button>-->
+                <div class="col-sm-6">
+                  format:
+                  <select class="form-control form-control-sm">
+                    <option *ngFor="let format of formats" [selected]="format === deck.format">
+                      {{format.name}}
+                    </option>
+                  </select>
+                </div>
             </div>
-            <div class="col-sm-5">
-              <div class="text-center">
-                description:
-                <textarea class="form-control form-control-sm" rows="4"></textarea>
-              </div>
-              <!--<div class="text-left">-->
-              <!--<br/><br/>-->
-              <!--<button class="btn btn-sm btn-primary">save</button>-->
-              <!--</div>-->
+            
+            <div class="form-group">
+                <div class="text-center">
+                  description:
+                  <textarea class="form-control form-control-sm" rows="4" [(ngModel)]="deck.description"></textarea>
+                </div>
             </div>
-            <div class="col-sm-1">
-              <button class="btn btn-sm btn-danger float-right"><i class="fa fa-trash"></i></button>
+
+            <div class="form-group">
+              Cards: {{deck.totalCards}}
+            </div>
+
+          </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <button class="btn btn-sm btn-primary text-center">save</button>
+              <!--<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>-->
             </div>
           </div>
+
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="card">
 
-          <div class="container">
+      <div class="col-sm-3">
+        <!--card search for deckbuilder-->
+        <div class="card">
+          <div class="row">
+            <div class="col">
+              <label for="quick_search">quick search</label>
+              <input auto-complete
+                     class="form-control"
+                     id="quick_search"
+                     type="text"
+                     placeholder="search cards..."
+                     (keypress)="enterKeyPressed($event)"
+                     [source]="search.bind(this)"
+                     [list-formatter]="formatSearch"
+                     [min-chars]="3"
+                     display-property-name="name"
+                     [(ngModel)]="cardSearch">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="quantity_select">quantity</label>
+              <select *ngIf="!cardSearch?.type?.includes('Basic Land')" [(ngModel)]="quantity" class="form-control form-control-sm" id="quantity_select">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+              <input type="number" *ngIf="cardSearch?.type?.includes('Basic Land')" [(ngModel)]="quantity" class="form-control form-control-sm" id="quantity_select" />
+            </div>
+            <div class="col-sm-6">
+              <label for="printing_select">printing</label>
+              <select class="form-control form-control-sm" id="printing_select">
+                <option></option>
+              </select>
+            </div>
+          </div>
+
+          <div *ngIf="cardSearch?.id">
+              <div class="row">
+                  <div class="col-sm-8 offset-1">
+                    <img style="border-radius: 10px;" [src]="cardSearch.imageUrl">
+                  </div>
+                </div>
+
+                <br>
+      
+                <div class="row">
+                  <div class="col-sm-6 offset-3">
+                    <button class="btn btn-primary" (click)="addCard()">add to deck</button>
+                  </div>
+                </div>
+          </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <hr/>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-10 offset-1">
+        <div class="card" *ngIf="deck">
             <div class="row">
-              <div class="col-sm-2">
-                <h6>creatures</h6>
-                <ul *ngIf="deck">
-                  <li *ngFor="let creature of deck.creatures">
-                    {{creature.name}}
+              <div class="col-sm-4">
+                <h6 *ngIf="!deck.creatures.length">creatures</h6>
+                <h6 *ngIf="deck.creatures.length">creatures ({{getCount("creatures")}})</h6>
+                <ul>
+                  <li *ngFor="let card of deck.creatures" class="hover_img">
+                    <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('creatures', card)">-</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
+                    <!--<i class="add-card" (click)="removeAllCards(card)">X</i>-->
                   </li>
                 </ul>
               </div>
-              <div class="col-sm-2">
-                <h6>artifacts</h6>
-                <ul *ngIf="deck">
-                  <li *ngFor="let creature of deck.artifacts">
-                    {{creature.name}}
+              <div class="col-sm-4">
+                <h6 *ngIf="!deck.artifacts.length">artifacts</h6>
+                <h6 *ngIf="deck.artifacts.length">artifacts ({{getCount("artifacts")}})</h6>
+                <ul>
+                  <li *ngFor="let card of deck.artifacts" class="hover_img">
+                    <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('artifacts', card)">-</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
-              <div class="col-sm-2">
-                <h6>enchantments</h6>
-                <ul *ngIf="deck">
-                  <li *ngFor="let creature of deck.enchantments">
-                    {{creature.name}}
-                  </li>
-                </ul>
-              </div>
-              <div class="col-sm-2">
-                <h6>instants</h6>
-                <ul *ngIf="deck">
-                  <li *ngFor="let creature of deck.instants">
-                    {{creature.name}}
-                  </li>
-                </ul>
-              </div>
-              <div class="col-sm-2">
-                <h6>sorceries</h6>
-                <ul *ngIf="deck">
-                  <li *ngFor="let creature of deck.sorceries">
-                    {{creature.name}}
-                  </li>
-                </ul>
-              </div>
-              <div class="col-sm-2">
-                <h6>planeswalkers</h6>
-                <ul *ngIf="deck">
-                  <li *ngFor="let creature of deck.planeswalkers">
-                    {{creature.name}}
+              <div class="col-sm-4">
+                <h6 *ngIf="!deck.enchantments.length">enchantments</h6>
+                <h6 *ngIf="deck.enchantments.length">enchantments ({{getCount("enchantments")}})</h6>
+                <ul>
+                  <li *ngFor="let card of deck.enchantments" class="hover_img">
+                    <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('enchantments', card)">-</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
                   </li>
                 </ul>
               </div>
             </div>
+              <div class="row">
+              <div class="col-sm-4">
+                <h6 *ngIf="!deck.instants.length">instants</h6>
+                <h6 *ngIf="deck.instants.length">instants ({{getCount("instants")}})</h6>
+                <ul>
+                  <li *ngFor="let card of deck.instants" class="hover_img">
+                    <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('instants', card)">-</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-4">
+                <h6 *ngIf="!deck.sorceries.length">sorceries</h6>
+                <h6 *ngIf="deck.sorceries.length">sorceries ({{getCount("sorceries")}})</h6>
+                <ul>
+                  <li *ngFor="let card of deck.sorceries" class="hover_img">
+                    <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('sorceries', card)">-</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-4">
+                <h6 *ngIf="!deck.planeswalkers.length">planeswalkers</h6>
+                <h6 *ngIf="deck.planeswalkers.length">planeswalkers ({{getCount("planeswalkers")}})</h6>
+                <ul>
+                  <li *ngFor="let card of deck.planeswalkers" class="hover_img">
+                    <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('planeswalkers', card)">-</i>
+                    <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                    <i *ngIf="card.quantity < 4 && deck.format.allowDupes" class="add-card" (click)="addOne(card)">+</i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 *ngIf="!deck.lands.length">lands</h6>
+              <h6 *ngIf="deck.lands.length">lands ({{getCount("lands")}})</h6>
+              <ul>
+                <li *ngFor="let card of deck.lands" class="hover_img">
+                  <i *ngIf="card.quantity >= 1" class="remove-card" (click)="removeCard('lands', card)">-</i>
+                  <a href="#" (click)="openCardModal(cardModal, card)">{{card.name}} ({{card.quantity}})<img [src]="card.imageUrl" height="350" /></a>
+                  <i class="add-card" (click)="addOne(card)">+</i>
+                </li>
+              </ul>
+            </div>
           </div>
-
-        </div>
+          </div>
       </div>
     </div>
   </div>
 
 
 </div>
+
+<ng-template #cardModal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{viewCard.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <img [src]="viewCard.imageUrl">
+          </div>
+          <div class="col-sm-6">
+            <button *ngIf="canBeCommander(viewCard)"
+            class="btn btn-primary" (click)="setCommander(viewCard)">Set as Commander</button>
+          </div>
+        </div>
+      </div>
+  </ng-template>
 
