@@ -89,7 +89,7 @@ function updateDeck(_id, body) {
     }
 
     if (deck) {
-      Deck.update({ _id: _id }, body, function (err, doc) {
+      Deck.updateOne({ _id: _id }, body, function (err, doc) {
         if (err) {
           deferred.reject(err.name + ': ' + err.message);
         }

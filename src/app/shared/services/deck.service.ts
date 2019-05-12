@@ -31,7 +31,8 @@ export class DeckService {
   }
 
   update(_id: string, data: any) {
-    return this.http.put(`/decks/${_id}`, data);
+    return this.http.put(`/decks/${_id}`, data)
+      .map((response: Response) => response.json());
   }
 
   delete(_id: string) {

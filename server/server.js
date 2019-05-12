@@ -9,7 +9,6 @@ const express = require('express'),
 
 let app = express();
 
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -33,13 +32,15 @@ app.use(jwt({
   );
 }));
 
-app.use('/users', require('./controllers/users.controller'));
-app.use('/cards', require('./controllers/cards.controller'));
-app.use('/decks', require('./controllers/decks.controller'));
+app.use(cors());
+
+app.use('/users', cors(), require('./controllers/users.controller'));
+app.use('/cards', cors(), require('./controllers/cards.controller'));
+app.use('/decks', cors(), require('./controllers/decks.controller'));
 
 app.listen(config.port, function() {
   mongoose.Promise = global.Promise;
-  mongoose.connect(config.uri, { useMongoClient: true });
+  mongoose.connect(config.uri, { useNewUrlParser: true });
 
   const db = mongoose.connection;
 

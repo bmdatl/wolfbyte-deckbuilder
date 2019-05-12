@@ -116,7 +116,7 @@ function updateUser(_id, body) {
         data.password = bcrypt.hashSync(body.password, 10);
       }
 
-      User.update({ _id: _id }, data, function(err, doc) {
+      User.updateOne({ _id: _id }, data, function(err, doc) {
         if (err) {
           deferred.reject(err.name + ': ' + err.message);
         }

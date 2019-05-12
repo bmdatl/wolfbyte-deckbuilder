@@ -1,5 +1,5 @@
 export const appConfig = {
-  apiUrl: 'http://6985611d.ngrok.io',
+  apiUrl: 'http://c498ea61.ngrok.io',
 };
 
 export const tcgConfig = {

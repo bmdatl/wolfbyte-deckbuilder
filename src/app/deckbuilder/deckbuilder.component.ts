@@ -21,12 +21,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class DeckbuilderComponent implements OnInit {
 
   deck;
-  decks;
+  decks: Deck[];
   currentUser;
-  showDecks: boolean = false;
+  showDecks = false;
   cards: Card[];
   cardSearch: Card;
-  quantity: number = 1;
+  quantity = 1;
   cardToAdd: Card;
   viewCard: Card;
 
@@ -56,18 +56,17 @@ export class DeckbuilderComponent implements OnInit {
     if (this.currentUser) {
       this.deckService.getByUser(this.currentUser._id)
         .subscribe(decks => {
-          if (decks) {
-            this.decks = decks;
-          }
+          this.decks = decks;
         });
     }
   }
 
   editDeck(e) {
+    this.getCardCount();
     for (let f of this.formats) {
       if (f.name === e.format) {
         e.format = f;
-      }  
+      }
     }
   }
 
@@ -76,8 +75,8 @@ export class DeckbuilderComponent implements OnInit {
     return false;
   }
 
-  addCard(cardType?, inc_card?) {
-    let card = inc_card ? inc_card : this.cardSearch;
+  addCard(cardType?, incCard?) {
+    const card = incCard ? incCard : this.cardSearch;
     this.cardSearch = null;
 
     if (!cardType && card) {
@@ -97,7 +96,7 @@ export class DeckbuilderComponent implements OnInit {
         cardType = 'enchantments';
       }
     }
-    let cards = this.deck[cardType];
+    const cards = this.deck[cardType];
       if (cards.length) {
         for (let i = 0; i < cards.length; i++) {
           if (cards[i]['name'] === card.name) {
@@ -155,12 +154,13 @@ export class DeckbuilderComponent implements OnInit {
   }
 
   updateDeck() {
-    let deckValues = this.deck;
+    const deckValues = this.deck;
     delete deckValues['createdAt'];
     this.deckService.update(this.deck._id, deckValues)
-      .subscribe(res => {
-        console.log(this.deck);
-        this.quantity = 1;
+      .subscribe((res: Deck) => {
+        console.log(res);
+        this.deck = res;
+        this.getCardCount();
       });
   }
 
@@ -171,6 +171,47 @@ export class DeckbuilderComponent implements OnInit {
       count += parseInt(card.quantity);
     }
     return count;
+  }
+
+  getCardCount() {
+    let count = 0;
+    const keys = [
+      'artifacts',
+      'creatures',
+      'lands',
+      'instants',
+      'sorceries',
+      'enchantments',
+      'commanders'
+    ];
+
+    for (let key of keys) {
+      for (let card of this.deck[key]) {
+        count += card.quantity;
+      }
+    }
+    // for (let card of this.deck['artifacts']) {
+    //   count += card.quantity;
+    // }
+    // for (let card of this.deck['creatures']) {
+    //   count += card.quantity;
+    // }
+    // for (let card of this.deck['lands']) {
+    //   count += card.quantity;
+    // }
+    // for (let card of this.deck['instants']) {
+    //   count += card.quantity;
+    // }
+    // for (let card of this.deck['sorceries']) {
+    //   count += card.quantity;
+    // }
+    // for (let card of this.deck['enchantments']) {
+    //   count += card.quantity;
+    // }
+    // for (let card of this.deck['commanders']) {
+    //   count += card.quantity;
+    // }
+    this.deck['totalCards'] = count;
   }
 
   viewDecks() {
